@@ -8,6 +8,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
+// redux
+import { Provider } from 'react-redux';
+import { store } from './redux/ConfigStore';
+
 // screens
 import About from './screens/About';
 import Hub from './screens/Hub';
@@ -16,22 +20,15 @@ import Signup from './screens/Signup';
 
 export default function App() {
 	return (
-		<NavigationContainer>
-			<Stack.Navigator>
-				<Stack.Screen name='About' component={About} />
-				<Stack.Screen name='Hub' component={Hub} />
-				<Stack.Screen name='Login' component={Login} />
-				<Stack.Screen name='Signup' component={Signup} />
-			</Stack.Navigator>
-		</NavigationContainer>
+		<Provider store={store}>
+			<NavigationContainer>
+				<Stack.Navigator>
+					<Stack.Screen name='About' component={About} />
+					<Stack.Screen name='Hub' component={Hub} />
+					<Stack.Screen name='Login' component={Login} />
+					<Stack.Screen name='Signup' component={Signup} />
+				</Stack.Navigator>
+			</NavigationContainer>
+		</Provider>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-});
