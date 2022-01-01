@@ -1,0 +1,11 @@
+#force www - https
+
+
+<IfModule mod_rewrite.c>
+   
+    RewriteEngine On
+    SetEnvIf Authorization .+ HTTP_AUTHORIZATION=$0
+    
+    RewriteRule ^game/auth?$ /api/app/game/get_auth.php [NC,L]
+
+</IfModule>
