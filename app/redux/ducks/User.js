@@ -4,7 +4,7 @@
 
 // reducers
 const INITIAL_VALUE = {
-	loginStatus: 1,
+	loginStatus: 'LOGGED',
 };
 
 const User = (state = INITIAL_VALUE, action) => {
