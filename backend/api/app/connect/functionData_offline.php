@@ -16,7 +16,7 @@
 	//database
 	function bd_galeria()
 	{
-		return 'efm_app';
+		return 'react-auth';
 	}	
 	//token JWT
 	function jwt_key()

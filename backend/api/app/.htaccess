@@ -5,7 +5,9 @@
    
     RewriteEngine On
     SetEnvIf Authorization .+ HTTP_AUTHORIZATION=$0
-    
-    RewriteRule ^game/auth?$ /api/app/game/get_auth.php [NC,L]
+
+    RewriteRule ^auth/get-auth?$ /api/app/auth/get_auth.php [NC,L]
+    RewriteRule ^auth/check-auth?$ /api/app/auth/check_auth.php [NC,L]
+    RewriteRule ^auth/login?$ /api/app/auth/login.php [NC,L]
 
 </IfModule>

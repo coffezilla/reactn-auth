@@ -2,7 +2,7 @@
 
 
 //
-function createJWTAuth($email, $key) {
+function createJWTAuth($email, $timeStamp, $key) {
 
     $header = [
         'alg' => 'HS256',
@@ -12,8 +12,8 @@ function createJWTAuth($email, $key) {
     $header = base64UrlEncode($header);
     
     $payload = [
-        'iss' => 'bhxsites',
-        'email' => $email
+        'email' => $email,
+        'timestamp' => $timeStamp
     ];
     $payload = json_encode($payload);
     $payload = base64UrlEncode($payload);
