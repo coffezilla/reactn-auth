@@ -30,7 +30,6 @@ const Controllers = () => {
 			if (responseLogin.data.status === 1) {
 				getAuth(form.email)
 					.then((resAuth) => {
-						console.log('authenticationz', resAuth);
 						if (resAuth.data.status === 1) {
 							writeItemToStorage(resAuth.data).then((response) => {
 								dispatch(actSetLogin());
@@ -51,14 +50,12 @@ const Controllers = () => {
 	// loggout user
 	const submitLogout = async () => {
 		await submitLogoutUser().then((responseLogout) => {
-			console.log('logout right now');
 			clearAllFromStorage();
 			dispatch(actSetLogout());
 		});
 
 		await getAuth()
 			.then((resAuth) => {
-				console.log('authentication', resAuth);
 				if (resAuth.data.status === 1) {
 					writeItemToStorage(resAuth.data).then((response) => {
 						// set loading apenas depois de pegar um token

@@ -8,9 +8,7 @@ import { readItemFromStorage } from '../../../helpers/handleStorage';
 export const MsDebuggerRedux = () => {
 	const RdxRoot = useSelector((state) => state);
 
-	useEffect(() => {
-		console.log('man redux', RdxRoot);
-	}, []);
+	useEffect(() => {}, []);
 	return <MsDebugger value={RdxRoot} name='Redux' />;
 };
 
@@ -18,7 +16,6 @@ export const MsDebuggerLocalStorage = () => {
 	const [StgRoot, setStgRoot] = useState({});
 
 	const getCurrentStorage = async () => {
-		// console.log('free');
 		await readItemFromStorage().then((responseStorage) =>
 			setStgRoot(responseStorage)
 		);

@@ -38,23 +38,18 @@ const Routers = () => {
 	// const [isLogged, setIsLogged] = useState(false);
 	const RdxStatus = useSelector((state) => state.loginStatus);
 
-	console.log('revoad ----------- ', RdxStatus);
-
 	// get auth to make simple calls
 	const getNewToken = async () => {
-		console.log('constructor');
 		await getAuth()
 			.then((resAuth) => {
-				console.log('authentication', resAuth);
 				if (resAuth.data.status === 1) {
 					writeItemToStorage(resAuth.data).then((response) => {
-						console.log('ksjksdjfakdsf', response);
 						// set loading apenas depois de pegar um token
 						setHasToken(true);
 						setLoading(false);
 					});
 				} else {
-					console.log('Erro authz');
+					console.log('Erro auth');
 					clearAllFromStorage();
 					dispatch(actSetLogout());
 					// setIsLogged(false);
@@ -76,7 +71,6 @@ const Routers = () => {
 				// not auth to make any requests
 				// not logged to access privated content
 				// ROUTER: login
-				console.log('no storage');
 				getNewToken();
 			} else {
 				if (
@@ -95,9 +89,9 @@ const Routers = () => {
 						responseStorage.auth.token,
 						responseStorage.auth.timestamp
 					).then((responseCheckAuth) => {
-						console.log('checking auth');
+						// console.log('checking auth');
 						if (responseCheckAuth.data.status === 1) {
-							console.log('authenticated');
+							// console.log('authenticated');
 							if (
 								responseStorage.auth.email === undefined ||
 								responseStorage.auth.email.length < 3

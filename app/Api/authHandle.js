@@ -53,7 +53,7 @@ export const getAuth = async (emailUser = 'NOT_LOGGED') => {
 // GET
 // login
 export const submitLoginUser = async (userEmail, userPassword) => {
-	console.log('login');
+	console.log('submitLoginUser');
 	let serverResponse = { data: { status: 0 } };
 	let formData = new FormData();
 	formData.append('email', userEmail);
@@ -88,7 +88,6 @@ export const submitLoginUser = async (userEmail, userPassword) => {
 			}
 		})
 		.catch((error) => {
-			console.log(error);
 			serverResponse = {
 				data: {
 					status: 2,
@@ -127,7 +126,6 @@ export const checkAuth = async (userEmail, userToken, timestamp) => {
 		headers: { Authorization: `Bearer ${userToken}` },
 	})
 		.then((response) => {
-			console.log('voga', response.data);
 			// 1 - done
 			if (response.data.status === 1) {
 				serverResponse = {

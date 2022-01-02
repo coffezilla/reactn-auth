@@ -7,10 +7,8 @@ export const writeItemToStorage = async (value) => {
 		const jsonValue = JSON.stringify(value);
 		await AsyncStorage.setItem(LOCAL_STORAGE_STORE, jsonValue);
 		return jsonValue;
-		console.log('salvo');
 	} catch (e) {
 		return e;
-		console.log('erro');
 	}
 };
 
@@ -25,7 +23,7 @@ export const readItemFromStorage = async () => {
 };
 
 export const clearAllFromStorage = async () => {
-	console.log('clear');
+	console.log('clear storage');
 	try {
 		await AsyncStorage.clear();
 	} catch (e) {
