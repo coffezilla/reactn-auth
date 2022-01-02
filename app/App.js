@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { TransitionPresets } from '@react-navigation/stack';
 
 // nav
 import { NavigationContainer } from '@react-navigation/native';
@@ -34,8 +35,6 @@ import Signup from './screens/Signup';
 const Routers = () => {
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(true);
-	const [hasToken, setHasToken] = useState(false); // can be used as loading instead
-	// const [isLogged, setIsLogged] = useState(false);
 	const RdxStatus = useSelector((state) => state.loginStatus);
 
 	// get auth to make simple calls
@@ -45,32 +44,29 @@ const Routers = () => {
 				if (resAuth.data.status === 1) {
 					writeItemToStorage(resAuth.data).then((response) => {
 						// set loading apenas depois de pegar um token
-						setHasToken(true);
 						setLoading(false);
 					});
 				} else {
 					console.log('Erro auth');
 					clearAllFromStorage();
 					dispatch(actSetLogout());
-					// setIsLogged(false);
 				}
 			})
 			.catch((error) => {
 				console.log('Erro auth, try again');
 				clearAllFromStorage();
 				dispatch(actSetLogout());
-				// setIsLogged(false);
 			});
 	};
 
 	// checking local storage for some token authentication or email login
 	const getCurrentStorage = async () => {
 		await readItemFromStorage().then((responseStorage) => {
+			console.log('qual a boa', responseStorage);
 			if (responseStorage === null) {
 				// if has nothing it means:
 				// not auth to make any requests
 				// not logged to access privated content
-				// ROUTER: login
 				getNewToken();
 			} else {
 				if (
@@ -81,17 +77,10 @@ const Routers = () => {
 					console.log(
 						'storage missing important data, cannot make requestes to the server'
 					);
-					// ROUTER: login
 					getNewToken();
 				} else {
-					checkAuth(
-						responseStorage.auth.email,
-						responseStorage.auth.token,
-						responseStorage.auth.timestamp
-					).then((responseCheckAuth) => {
-						// console.log('checking auth');
+					checkAuth().then((responseCheckAuth) => {
 						if (responseCheckAuth.data.status === 1) {
-							// console.log('authenticated');
 							if (
 								responseStorage.auth.email === undefined ||
 								responseStorage.auth.email.length < 3
@@ -104,7 +93,6 @@ const Routers = () => {
 									'has token + logged: can make requests + access privated content'
 								);
 							}
-							setHasToken(true);
 							setLoading(false);
 						} else {
 							// not authenticated
@@ -129,18 +117,52 @@ const Routers = () => {
 			</View>
 		);
 	}
+
+	// animation fade
+	const forFade = ({ current }) => ({
+		cardStyle: {
+			// opacity: current.progress,
+		},
+	});
+
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
-				<Stack.Screen name='About' component={About} />
 				{RdxStatus === 'LOGGED' ? (
-					<Stack.Screen name='Hub' component={Hub} />
+					<Stack.Screen
+						name='Hub'
+						component={Hub}
+						options={{
+							cardStyleInterpolator: forFade,
+						}}
+					/>
 				) : (
 					<>
-						<Stack.Screen name='Login' component={Login} />
-						<Stack.Screen name='Signup' component={Signup} />
+						<Stack.Screen
+							name='Login'
+							component={Login}
+							options={{
+								cardStyleInterpolator: forFade,
+							}}
+						/>
+						<Stack.Screen
+							name='Signup'
+							component={Signup}
+							options={{
+								title: 'Cadastrar',
+								...TransitionPresets.SlideFromRightIOS,
+							}}
+						/>
 					</>
 				)}
+				<Stack.Screen
+					name='About'
+					component={About}
+					options={{
+						title: 'Sobre',
+						...TransitionPresets.SlideFromRightIOS,
+					}}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

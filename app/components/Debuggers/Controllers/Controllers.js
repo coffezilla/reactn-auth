@@ -1,12 +1,13 @@
 import { View, Text, Button } from 'react-native';
-import { submitLoginUser, submitLogoutUser } from '../../../Api/authHandle';
+import {
+	submitLoginUser,
+	submitLogoutUser,
+	getAuth,
+} from '../../../Api/authHandle';
 import { useDispatch } from 'react-redux';
 
 // redux
 import { actSetLogin, actSetLogout } from '../../../redux/ducks/User';
-
-// rest
-import { getAuth } from '../../../Api/authHandle';
 
 // localstorage
 import {

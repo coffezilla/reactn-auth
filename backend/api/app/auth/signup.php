@@ -29,7 +29,6 @@ include "../connect/auth.php";
 $isAuth = verifyAuth($clientToken, $JWTServerkey);
 
 if($isAuth) {
-
     // JWT auth
     // include "../connect/auth.php";
     $token = createJWTAuth($userEmail, $currentTimestampClean, $JWTServerkey);
@@ -114,10 +113,6 @@ if($isAuth) {
     } else {
 
     }
-} else {
-    // nao autehnticado
-    $dataResponse['status'] = 2;
 }
-
 $resultadosJson = json_encode($dataResponse);
 echo $resultadosJson;

@@ -42,7 +42,7 @@ const MenuDebugger = () => {
 				<Text style={styles.text}>About - todos</Text>
 			</Pressable>
 
-			<Controllers />
+			{/* <Controllers /> */}
 		</View>
 	);
 };
