@@ -184,6 +184,7 @@ export const submitSignupUser = async (form) => {
 	});
 
 	let serverResponse = { data: { status: 0 } };
+
 	let formData = new FormData();
 	formData.append('email', form.email);
 	formData.append('password', form.password);
@@ -205,6 +206,68 @@ export const submitSignupUser = async (form) => {
 							token: response.data.token,
 							timestamp: response.data.timestamp,
 							email: form.email,
+						},
+					},
+				};
+			} else {
+				serverResponse = {
+					data: {
+						status: response.data.status,
+						message: response.data.message,
+					},
+				};
+			}
+		})
+		.catch((error) => {
+			serverResponse = {
+				data: {
+					status: 2,
+					message: 'server error, try again!',
+				},
+			};
+		});
+
+	return serverResponse;
+};
+
+// delete account
+// GET
+// login
+export const submitDeleteUser = async (userEmail, userPassword) => {
+	let userAuthToken = null;
+	let userAuthTimestamp = null;
+	let userAuthEmail = null;
+	await readItemFromStorage().then((responseStorage) => {
+		userAuthToken = responseStorage.auth.token;
+		userAuthEmail = responseStorage.auth.email;
+		userAuthTimestamp = responseStorage.auth.timestamp;
+	});
+
+	let serverResponse = { data: { status: 0 } };
+	let formData = new FormData();
+	formData.append('auth_timestamp', userAuthTimestamp);
+	formData.append('auth_email', userAuthEmail);
+	formData.append('email', userEmail);
+	formData.append('password', userPassword);
+
+	const END_POINT = END_POINT_BASE + '/auth/delete-user';
+
+	await axios({
+		method: 'post',
+		url: END_POINT,
+		data: formData,
+		headers: { Authorization: `Bearer ${userAuthToken}` },
+	})
+		.then((response) => {
+			console.log('cabeine do tempo', response.data);
+			if (response.data.status === 1) {
+				serverResponse = {
+					data: {
+						status: response.data.status,
+						auth: {
+							token: response.data.token,
+							timestamp: response.data.timestamp,
+							email: userEmail,
 						},
 					},
 				};

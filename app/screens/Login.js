@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { Text, StyleSheet, View, ScrollView, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import MenuDebugger from '../components/Debuggers/MenuDebugger';
-import {
+import MsDebugger, {
 	MsDebuggerRedux,
 	MsDebuggerLocalStorage,
 } from '../components/Debuggers/MsDebugger';
@@ -19,36 +20,59 @@ import {
 	writeItemToStorage,
 	clearAllFromStorage,
 } from '../helpers/handleStorage';
+import { TextInput } from 'react-native-gesture-handler';
 
 const Login = () => {
+	const [form, setForm] = useState({
+		email: 'foo@gmail.com',
+		password: '123',
+	});
 	const RdxRoot = useSelector((state) => state);
 	const dispatch = useDispatch();
 
-	const form = {
-		email: 'renato@gmail.com',
-		password: '123123',
+	const handleForm = (inputName, inputText) => {
+		setForm({
+			...form,
+			[inputName]: inputText,
+		});
 	};
 
 	// login user
 	const submitLogin = async () => {
 		await submitLoginUser(form.email, form.password).then((responseLogin) => {
+			console.log('avo', responseLogin);
 			if (responseLogin.data.status === 1) {
-				getAuth(form.email)
-					.then((resAuth) => {
-						if (resAuth.data.status === 1) {
-							writeItemToStorage(resAuth.data).then((response) => {
-								console.log('saudade', response);
-								dispatch(actSetLogin());
-							});
-						} else {
-							console.log('Erro auth');
-						}
-					})
-					.catch((error) => {
-						console.log('Erro auth, try again');
-					});
+				// getAuth(form.email)
+				// 	.then((resAuth) => {
+				// 		if (resAuth.data.status === 1) {
+				writeItemToStorage(responseLogin.data).then((response) => {
+					console.log('saudade', response);
+					dispatch(actSetLogin());
+				});
+				// 		} else {
+				// 			console.log('Erro auth');
+				// 		}
+				// 	})
+				// 	.catch((error) => {
+				// 		console.log('Erro auth, try again');
+				// 	});
 			} else {
+				// getAuth(form.email)
+				// 	.then((resAuth) => {
+				// 		if (resAuth.data.status === 1) {
+				// 			writeItemToStorage(resAuth.data).then((response) => {
+				// 				console.log('saudade', response);
+				// 				dispatch(actSetLogin());
+				// 			});
+				// 		} else {
+				// 			console.log('Erro auth');
+				// 		}
+				// 	})
+				// 	.catch((error) => {
+				// 		console.log('Erro auth, try again');
+				// 	});
 				dispatch(actSetLogout());
+				alert(responseLogin.data.message);
 			}
 		});
 	};
@@ -56,10 +80,33 @@ const Login = () => {
 	return (
 		<ScrollView style={styles.container}>
 			<MenuDebugger />
-			<MsDebuggerRedux />
-			<MsDebuggerLocalStorage />
+			<MsDebugger name='formulario' value={form} />
+			{/* <MsDebuggerRedux /> */}
+			{/* <MsDebuggerLocalStorage /> */}
+
 			<View>
 				<Text>LOGIN</Text>
+				<View>
+					<Text>Email</Text>
+					<TextInput
+						style={styles.input}
+						placeholder='Ex.: my@email.com'
+						onChangeText={(text) => handleForm('email', text)}
+						keyboardType='email-address'
+						autoCapitalize='none'
+						value={form.email}
+					/>
+				</View>
+				<View>
+					<Text>Password</Text>
+					<TextInput
+						style={styles.input}
+						placeholder='******'
+						secureTextEntry={true}
+						onChangeText={(text) => handleForm('password', text)}
+						value={form.password}
+					/>
+				</View>
 				<View style={{ padding: 3, flex: 1 }}>
 					<Button title='LOGIN' onPress={submitLogin} />
 				</View>
@@ -73,5 +120,10 @@ export default Login;
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: '#fff',
+	},
+	input: {
+		borderWidth: 1,
+		height: 40,
+		marginBottom: 3,
 	},
 });

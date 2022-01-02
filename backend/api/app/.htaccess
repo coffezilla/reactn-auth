@@ -10,5 +10,6 @@
     RewriteRule ^auth/check-auth?$ /api/app/auth/check_auth.php [NC,L]
     RewriteRule ^auth/login?$ /api/app/auth/login.php [NC,L]
     RewriteRule ^auth/signup?$ /api/app/auth/signup.php [NC,L]
+    RewriteRule ^auth/delete-user?$ /api/app/auth/delete_user.php [NC,L]
 
 </IfModule>

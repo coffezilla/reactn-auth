@@ -62,14 +62,14 @@ function base64UrlEncode ($value) {
 
 
 // 
-function getAuthorizatedUserData($connection, $userEmail, $JWTServerkey, $clientToken) {
+function getAuthorizatedUserData($connection, $userEmail, $currentTimestampClean,  $JWTServerkey, $clientToken) {
 
     $responseData = array(
         'status' => '0',
         'id' => '0',
         'email' => '0'
     );
-    $emailValidation = createJWTAuth($userEmail, $JWTServerkey);
+    $emailValidation = createJWTAuth($userEmail, $currentTimestampClean, $JWTServerkey);
 
     // check if email is correct
     if('Bearer '.$emailValidation === $clientToken) {
@@ -93,14 +93,18 @@ function getAuthorizatedUserData($connection, $userEmail, $JWTServerkey, $client
         } else {
 
             // no user
-            $responseData['status'] = 2;
+            $responseData['status'] = 3;
         }
 
     } else {
+        $responseData['status'] = 4;
         
-        // not auth
-        $responseData['status'] = 2;
     }
+
+    // not auth
+    $responseData['v1'] = $emailValidation;
+    $responseData['v2'] = $clientToken;
+    $responseData['livre'] = $userEmail.' - '.$currentTimestampClean;
 
     return $responseData;
 }
