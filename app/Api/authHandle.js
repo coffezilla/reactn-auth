@@ -198,7 +198,7 @@ export const submitSignupUser = async (userEmail, userName, userPassword) => {
 						auth: {
 							token: response.data.token,
 							timestamp: response.data.timestamp,
-							email: form.email,
+							email: userEmail,
 						},
 					},
 				};

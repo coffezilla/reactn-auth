@@ -15,5 +15,9 @@
     RewriteRule ^auth/pin-check?$ /api/app/auth/pin_check_forgot_password.php [NC,L]
     RewriteRule ^auth/set-new-password?$ /api/app/auth/set_new_password.php [NC,L]
     RewriteRule ^auth/password-check?$ /api/app/auth/password_check_change_password.php [NC,L]
+    
+    # user
+    RewriteRule ^user/get-data?$ /api/app/user/user_get_data.php [NC,L]
+    RewriteRule ^user/edit?$ /api/app/user/user_edit_data.php [NC,L]
 
 </IfModule>

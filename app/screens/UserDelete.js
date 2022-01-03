@@ -39,11 +39,7 @@ const UserDelete = () => {
 		email: 'foo@gmail.com',
 		password: '123',
 	});
-	const [formPassword, setFormPassword] = useState({
-		currentPassword: '123',
-		newPassword: '222',
-		newPasswordConfirm: '222',
-	});
+
 	const RdxRoot = useSelector((state) => state);
 	const dispatch = useDispatch();
 
@@ -58,6 +54,11 @@ const UserDelete = () => {
 	const submitDelete = async () => {
 		await submitDeleteUser(form.email, form.password).then((responseDelete) => {
 			if (responseDelete.data.status === 1) {
+				Alert.alert(
+					'Conta deletada',
+					'Sua conta foi deletada com sucesso. Não é possível recuperá-la novamente.'
+				);
+
 				dispatch(actSetLogout());
 				clearAllFromStorage();
 				getAuth()
@@ -92,28 +93,6 @@ const UserDelete = () => {
 			]
 		);
 	};
-
-	// // loggout user
-	// const submitLogout = async () => {
-	// 	await submitLogoutUser().then((responseLogout) => {
-	// 		clearAllFromStorage();
-	// 		dispatch(actSetLogout());
-	// 	});
-
-	// 	await getAuth()
-	// 		.then((resAuth) => {
-	// 			if (resAuth.data.status === 1) {
-	// 				writeItemToStorage(resAuth.data).then((response) => {
-	// 					// set loading apenas depois de pegar um token
-	// 				});
-	// 			} else {
-	// 				console.log('Erro auth');
-	// 			}
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log('Erro auth, try again');
-	// 		});
-	// };
 
 	return (
 		<ScrollView style={styles.container}>

@@ -55,6 +55,10 @@ const SetNewPassword = ({ route, navigation }) => {
 			formPassword.newPasswordConfirm
 		).then((responseNewPassword) => {
 			if (responseNewPassword.data.status === 1) {
+				Alert.alert(
+					'Senha atualizada',
+					'Sua senha foi atualizada com sucesso!'
+				);
 				writeItemToStorageSupport({ recovery_email: null }).then((response) => {
 					setFormPassword({
 						pin: '',
