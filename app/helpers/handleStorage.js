@@ -22,6 +22,27 @@ export const readItemFromStorage = async () => {
 	}
 };
 
+// create temporary for supporting
+export const writeItemToStorageSupport = async (value) => {
+	try {
+		const jsonValue = JSON.stringify(value);
+		await AsyncStorage.setItem('@auth_pin', jsonValue);
+		return jsonValue;
+	} catch (e) {
+		return e;
+	}
+};
+
+export const readItemFromStorageSupport = async () => {
+	try {
+		const jsonValue = await AsyncStorage.getItem('@auth_pin');
+		return jsonValue != null ? JSON.parse(jsonValue) : null;
+	} catch (e) {
+		return e;
+		// error reading value
+	}
+};
+
 export const clearAllFromStorage = async () => {
 	console.log('clear storage');
 	try {

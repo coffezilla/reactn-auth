@@ -96,7 +96,8 @@ if($isAuth) {
         '{$userName}',
         'last name',
         '{$userEmail}',
-        '{$userPasswordMd5}');") or die("erro sign up");
+        '{$userPasswordMd5}',
+        0);") or die("erro sign up");
 
         $token = createJWTAuth($userEmail, $currentTimestampClean, $JWTServerkey);
 

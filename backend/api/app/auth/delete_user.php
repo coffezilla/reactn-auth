@@ -25,13 +25,14 @@ $userPassword = str_replace(" ", "", $userPassword);
 $userPasswordMd5 = md5($userPassword);
 
 // verify
-$isNewUser = false;
+// $isNewUser = false;
 $validInputs = false;
 
 // check input
 if(
 $userEmail != '' && strlen($userEmail) >= 3 &&
-$authUserEmail != '' && strlen($authUserEmail) >= 3
+$authUserEmail != '' && strlen($authUserEmail) >= 3 &&
+$userPassword != '' && strlen($userPassword) >= 3
 ) {
     // pode passar
     $validInputs = true;

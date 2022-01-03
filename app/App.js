@@ -29,8 +29,13 @@ import {
 // screens
 import About from './screens/About';
 import Hub from './screens/Hub';
+import UserEdit from './screens/UserEdit';
+import UserDelete from './screens/UserDelete';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
+import SetNewPassword from './screens/SetNewPassword';
+import StartForgotPassword from './screens/StartForgotPassword';
+import StartChangePassword from './screens/StartChangePassword';
 
 const Routers = () => {
 	const dispatch = useDispatch();
@@ -129,13 +134,39 @@ const Routers = () => {
 		<NavigationContainer>
 			<Stack.Navigator>
 				{RdxStatus === 'LOGGED' ? (
-					<Stack.Screen
-						name='Hub'
-						component={Hub}
-						options={{
-							cardStyleInterpolator: forFade,
-						}}
-					/>
+					<>
+						<Stack.Screen
+							name='Hub'
+							component={Hub}
+							options={{
+								cardStyleInterpolator: forFade,
+							}}
+						/>
+						<Stack.Screen
+							name='UserEdit'
+							component={UserEdit}
+							options={{
+								title: 'UserEdit',
+								...TransitionPresets.SlideFromRightIOS,
+							}}
+						/>
+						<Stack.Screen
+							name='UserDelete'
+							component={UserDelete}
+							options={{
+								title: 'UserDelete',
+								...TransitionPresets.SlideFromRightIOS,
+							}}
+						/>
+						<Stack.Screen
+							name='StartChangePassword'
+							component={StartChangePassword}
+							options={{
+								title: 'StartChangePassword',
+								...TransitionPresets.SlideFromRightIOS,
+							}}
+						/>
+					</>
 				) : (
 					<>
 						<Stack.Screen
@@ -153,6 +184,14 @@ const Routers = () => {
 								...TransitionPresets.SlideFromRightIOS,
 							}}
 						/>
+						<Stack.Screen
+							name='StartForgotPassword'
+							component={StartForgotPassword}
+							options={{
+								title: 'StartForgotPassword',
+								...TransitionPresets.SlideFromRightIOS,
+							}}
+						/>
 					</>
 				)}
 				<Stack.Screen
@@ -160,6 +199,14 @@ const Routers = () => {
 					component={About}
 					options={{
 						title: 'Sobre',
+						...TransitionPresets.SlideFromRightIOS,
+					}}
+				/>
+				<Stack.Screen
+					name='SetNewPassword'
+					component={SetNewPassword}
+					options={{
+						title: 'SetNewPassword',
 						...TransitionPresets.SlideFromRightIOS,
 					}}
 				/>

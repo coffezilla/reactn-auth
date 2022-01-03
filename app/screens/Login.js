@@ -42,35 +42,11 @@ const Login = () => {
 		await submitLoginUser(form.email, form.password).then((responseLogin) => {
 			console.log('avo', responseLogin);
 			if (responseLogin.data.status === 1) {
-				// getAuth(form.email)
-				// 	.then((resAuth) => {
-				// 		if (resAuth.data.status === 1) {
 				writeItemToStorage(responseLogin.data).then((response) => {
 					console.log('saudade', response);
 					dispatch(actSetLogin());
 				});
-				// 		} else {
-				// 			console.log('Erro auth');
-				// 		}
-				// 	})
-				// 	.catch((error) => {
-				// 		console.log('Erro auth, try again');
-				// 	});
 			} else {
-				// getAuth(form.email)
-				// 	.then((resAuth) => {
-				// 		if (resAuth.data.status === 1) {
-				// 			writeItemToStorage(resAuth.data).then((response) => {
-				// 				console.log('saudade', response);
-				// 				dispatch(actSetLogin());
-				// 			});
-				// 		} else {
-				// 			console.log('Erro auth');
-				// 		}
-				// 	})
-				// 	.catch((error) => {
-				// 		console.log('Erro auth, try again');
-				// 	});
 				dispatch(actSetLogout());
 				alert(responseLogin.data.message);
 			}

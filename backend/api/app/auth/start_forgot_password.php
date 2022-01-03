@@ -14,10 +14,6 @@ $errors = array();
 $userEmail = addslashes(trim($_POST['email']));
 $userEmail = str_replace(" ", "", $userEmail);
 
-$userPassword = addslashes(trim($_POST['password']));
-$userPassword = str_replace(" ", "", $userPassword);
-$userPasswordMd5 = md5($userPassword);
-
 $currentTimestamp = Date('Y-m-d H:i:s');
 $currentTimestampClean = str_replace(" ", "", $currentTimestamp);
 
@@ -26,8 +22,7 @@ $validInputs = false;
 
 // check input
 if(
-$userEmail != '' && strlen($userEmail) >= 3 &&
-$userPassword != '' && strlen($userPassword) >= 3
+$userEmail != '' && strlen($userEmail) >= 3
 ) {
     // pode passar
     $validInputs = true;
@@ -37,45 +32,44 @@ $userPassword != '' && strlen($userPassword) >= 3
     $dataResponse['status'] = 2;
 }
 
-
 // JWT auth 
 include "../connect/auth.php";
 $isAuth = verifyAuth($clientToken, $JWTServerkey);
 
 if($isAuth) {
 
-    // JWT auth
-    $token = createJWTAuth($userEmail, $currentTimestampClean, $JWTServerkey);
-
     if($validInputs) {
-        // query
+
+        // get user id
         $queryUsers = mysqli_query($connection, "SELECT 
-        usr_id
+        usr_id,
+        usr_name
         FROM users
-        WHERE usr_email = '{$userEmail}' 
-        AND usr_status = 1
-        AND usr_password = '{$userPasswordMd5}'
-        ORDER BY usr_id DESC
+        WHERE usr_email = '{$userEmail}' AND usr_status = 1
+        ORDER BY usr_id
+        DESC
         LIMIT 1") or die ("User Not Found");
-
-
-        if (mysqli_num_rows ($queryUsers) > 0) {
+        // get user data
+        if (mysqli_num_rows ($queryUsers) > 0) {        
             $dataUser = mysqli_fetch_assoc($queryUsers);
             $userId = $dataUser['usr_id'];
-              
-            $dataResponse['token'] = $token;
-            $dataResponse['timestamp'] = $currentTimestamp;
+            $pinRecovery = substr(rand(111111,999999), 0, 6);
 
-            $dataResponse['user'] = array(
-                'id' => $dataUser['usr_id'],
-                'email' => $userEmail,
-            );
-            $dataResponse['status'] = 1;
+            // exclui usuario
+            mysqli_query($connection, "UPDATE users SET
+            usr_pin_recovery = '{$pinRecovery}'
+            WHERE usr_id = '{$userId}'") or die("update error"); 
+
+            $dataResponse['status'] = 1;  
+            $dataResponse['message'] = 'roo '.$userId;
 
         } else {
-            $dataResponse['message'] = 'Usuário ou senha inválido';
+    
+            $dataResponse['message'] = 'Usuário nao encontrado';
             $dataResponse['status'] = 3;
+
         }
+
     }
 
 } else {

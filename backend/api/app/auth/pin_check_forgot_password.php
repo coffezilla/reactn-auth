@@ -14,9 +14,8 @@ $errors = array();
 $userEmail = addslashes(trim($_POST['email']));
 $userEmail = str_replace(" ", "", $userEmail);
 
-$userPassword = addslashes(trim($_POST['password']));
-$userPassword = str_replace(" ", "", $userPassword);
-$userPasswordMd5 = md5($userPassword);
+$userPin = addslashes(trim($_POST['pin']));
+$userPin = str_replace(" ", "", $userPin);
 
 $currentTimestamp = Date('Y-m-d H:i:s');
 $currentTimestampClean = str_replace(" ", "", $currentTimestamp);
@@ -27,7 +26,7 @@ $validInputs = false;
 // check input
 if(
 $userEmail != '' && strlen($userEmail) >= 3 &&
-$userPassword != '' && strlen($userPassword) >= 3
+$userPin != '' && strlen($userPin) >= 3
 ) {
     // pode passar
     $validInputs = true;
@@ -37,45 +36,31 @@ $userPassword != '' && strlen($userPassword) >= 3
     $dataResponse['status'] = 2;
 }
 
-
 // JWT auth 
 include "../connect/auth.php";
 $isAuth = verifyAuth($clientToken, $JWTServerkey);
 
 if($isAuth) {
 
-    // JWT auth
-    $token = createJWTAuth($userEmail, $currentTimestampClean, $JWTServerkey);
-
     if($validInputs) {
-        // query
+
+        // check if pin is correct
         $queryUsers = mysqli_query($connection, "SELECT 
         usr_id
         FROM users
         WHERE usr_email = '{$userEmail}' 
-        AND usr_status = 1
-        AND usr_password = '{$userPasswordMd5}'
-        ORDER BY usr_id DESC
+        AND usr_status = 1 
+        AND  usr_pin_recovery = '{$userPin}'
+        ORDER BY usr_id
+        DESC
         LIMIT 1") or die ("User Not Found");
-
-
         if (mysqli_num_rows ($queryUsers) > 0) {
-            $dataUser = mysqli_fetch_assoc($queryUsers);
-            $userId = $dataUser['usr_id'];
-              
-            $dataResponse['token'] = $token;
-            $dataResponse['timestamp'] = $currentTimestamp;
-
-            $dataResponse['user'] = array(
-                'id' => $dataUser['usr_id'],
-                'email' => $userEmail,
-            );
             $dataResponse['status'] = 1;
-
         } else {
-            $dataResponse['message'] = 'Usuário ou senha inválido';
-            $dataResponse['status'] = 3;
+            $dataResponse['message'] = 'Usuário ou pin errado';
+            $dataResponse['status'] = 4;
         }
+
     }
 
 } else {

@@ -10,12 +10,33 @@ const MenuDebugger = () => {
 	return (
 		<View style={{ width: '100%' }}>
 			{RdxLogginStatus === 'LOGGED' && (
-				<Pressable
-					style={styles.button}
-					onPress={() => navigation.navigate('Hub')}
-				>
-					<Text style={styles.text}>Hub - logado</Text>
-				</Pressable>
+				<>
+					<Pressable
+						style={styles.button}
+						onPress={() => navigation.navigate('Hub')}
+					>
+						<Text style={styles.text}>Hub - logado</Text>
+					</Pressable>
+					<Pressable
+						style={styles.button}
+						onPress={() => navigation.navigate('UserEdit')}
+					>
+						<Text style={styles.text}>User Edit - logado</Text>
+					</Pressable>
+					<Pressable
+						style={styles.button}
+						onPress={() => navigation.navigate('UserDelete')}
+					>
+						<Text style={styles.text}>User Delete - logado</Text>
+					</Pressable>
+
+					<Pressable
+						style={styles.button}
+						onPress={() => navigation.navigate('StartChangePassword')}
+					>
+						<Text style={styles.text}>StartChangePassword - logado</Text>
+					</Pressable>
+				</>
 			)}
 
 			{RdxLogginStatus === 'NOT_LOGGED' && (
@@ -32,6 +53,13 @@ const MenuDebugger = () => {
 					>
 						<Text style={styles.text}>Signup - nao logado</Text>
 					</Pressable>
+
+					<Pressable
+						style={styles.button}
+						onPress={() => navigation.navigate('StartForgotPassword')}
+					>
+						<Text style={styles.text}>StartForgotPassword - nao logado</Text>
+					</Pressable>
 				</>
 			)}
 
@@ -40,6 +68,13 @@ const MenuDebugger = () => {
 				onPress={() => navigation.navigate('About')}
 			>
 				<Text style={styles.text}>About - todos</Text>
+			</Pressable>
+
+			<Pressable
+				style={styles.button}
+				onPress={() => navigation.navigate('SetNewPassword')}
+			>
+				<Text style={styles.text}>SetNewPassword - todos</Text>
 			</Pressable>
 
 			{/* <Controllers /> */}

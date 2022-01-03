@@ -38,6 +38,11 @@ const Hub = () => {
 		email: 'foo@gmail.com',
 		password: '123',
 	});
+	const [formPassword, setFormPassword] = useState({
+		currentPassword: '123',
+		newPassword: '222',
+		newPasswordConfirm: '222',
+	});
 	const RdxRoot = useSelector((state) => state);
 	const dispatch = useDispatch();
 
@@ -101,6 +106,11 @@ const Hub = () => {
 			});
 	};
 
+	//
+	const submitNewPassword = async () => {
+		alert('Saudade');
+	};
+
 	return (
 		<ScrollView style={styles.container}>
 			<MenuDebugger />
@@ -113,31 +123,79 @@ const Hub = () => {
 					<Button title='LOGOUT' onPress={submitLogout} />
 				</View>
 			</View>
-			<Text>Deletar perfil</Text>
-			<View>
-				<Text>Email</Text>
-				<TextInput
-					style={styles.input}
-					placeholder='Ex.: my@email.com'
-					onChangeText={(text) => handleForm('email', text)}
-					keyboardType='email-address'
-					autoCapitalize='none'
-					value={form.email}
-				/>
+			<View
+				style={{
+					borderWidth: 1,
+					backgroundColor: 'yellow',
+				}}
+			>
+				<Text>Deletar perfil</Text>
+				<View>
+					<Text>Email</Text>
+					<TextInput
+						style={styles.input}
+						placeholder='Ex.: my@email.com'
+						onChangeText={(text) => handleForm('email', text)}
+						keyboardType='email-address'
+						autoCapitalize='none'
+						value={form.email}
+					/>
+				</View>
+				<View>
+					<Text>Password</Text>
+					<TextInput
+						style={styles.input}
+						placeholder='******'
+						secureTextEntry={true}
+						onChangeText={(text) => handleForm('password', text)}
+						value={form.password}
+					/>
+				</View>
+				<View style={{ padding: 3, flex: 1 }}>
+					<Button title='DELETAR' onPress={submitDelete} />
+				</View>
 			</View>
-			<View>
-				<Text>Password</Text>
-				<TextInput
-					style={styles.input}
-					placeholder='******'
-					secureTextEntry={true}
-					onChangeText={(text) => handleForm('password', text)}
-					value={form.password}
-				/>
-			</View>
-			<View style={{ padding: 3, flex: 1 }}>
-				<Button title='DELETAR' onPress={submitDelete} />
-			</View>
+			{/* <View
+				style={{
+					borderWidth: 1,
+					backgroundColor: 'orange',
+				}}
+			>
+				<Text>Alterar senha</Text>
+				<View>
+					<Text>Password atual</Text>
+					<TextInput
+						style={styles.input}
+						placeholder='******'
+						secureTextEntry={true}
+						onChangeText={(text) => handleForm('currentPassword', text)}
+						value={formPassword.currentPassword}
+					/>
+				</View>
+				<View>
+					<Text>Novo</Text>
+					<TextInput
+						style={styles.input}
+						placeholder='******'
+						secureTextEntry={true}
+						onChangeText={(text) => handleForm('newPassword', text)}
+						value={formPassword.newPassword}
+					/>
+				</View>
+				<View>
+					<Text>Confirmar</Text>
+					<TextInput
+						style={styles.input}
+						placeholder='******'
+						secureTextEntry={true}
+						onChangeText={(text) => handleForm('newPasswordConfirm', text)}
+						value={formPassword.newPasswordConfirm}
+					/>
+				</View>
+				<View style={{ padding: 3, flex: 1 }}>
+					<Button title='ATUALIZAR PASSWORD' onPress={submitNewPassword} />
+				</View>
+			</View> */}
 		</ScrollView>
 	);
 };
