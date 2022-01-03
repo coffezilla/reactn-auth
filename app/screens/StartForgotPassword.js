@@ -28,7 +28,7 @@ import {
 const StartForgotPassword = ({ navigation }) => {
 	const [emailRecovery, setEmailRecovery] = useState(false);
 	const [form, setForm] = useState({
-		email: 'foo@gmail.com',
+		email: 'renato@bhxsites.com.br',
 		pin: '123',
 	});
 

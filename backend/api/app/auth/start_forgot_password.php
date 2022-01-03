@@ -50,9 +50,11 @@ if($isAuth) {
         DESC
         LIMIT 1") or die ("User Not Found");
         // get user data
-        if (mysqli_num_rows ($queryUsers) > 0) {        
+        if (mysqli_num_rows ($queryUsers) > 0) { 
+
             $dataUser = mysqli_fetch_assoc($queryUsers);
             $userId = $dataUser['usr_id'];
+            $userName = $dataUser['usr_name'];
             $pinRecovery = substr(rand(111111,999999), 0, 6);
 
             // exclui usuario
@@ -60,8 +62,52 @@ if($isAuth) {
             usr_pin_recovery = '{$pinRecovery}'
             WHERE usr_id = '{$userId}'") or die("update error"); 
 
-            $dataResponse['status'] = 1;  
-            $dataResponse['message'] = 'roo '.$userId;
+            // ======= ENVIAR EMAIL COM LINK
+            // email
+            $emailTitle = "Alterar senha";
+            // sender
+            $senderName = "React Native Auth";
+            $senderEmail = "atendimento@bhxsites.com.br";
+            // receiver
+            $receiverName = $userName;
+            $receiverEmail = $userEmail;
+
+
+            // ENVIO DE EMAIL
+            require_once("../email/phpmailer/PHPMailerAutoload.php");      
+            $mail = new PHPMailer();
+            $mail->IsSMTP = ('smtp');
+            $mail->Mailer = ('mail');
+            $mail->SMTPSecure = 'ssl';
+            $mail->SMTPAuth = true;
+            $mail->From = $senderEmail;
+            $mail->FromName = $senderName;
+            $mail->AddReplyTo($senderEmail, $senderName);
+            $mail->AddAddress( $receiverEmail, $receiverName);
+            $mail->IsHTML(true);
+            $mail-> CharSet = 'UTF-8';
+            // $mail->AddEmbeddedImage("/images/logo.png", "logomarca");
+
+            // e-mail template
+            include '../email/email_recovery_user_password.php';
+
+            $mail->Subject  = $emailTitle;
+            $mail->Body = $emailBody;
+            $mail->AltBody = $emailBody;
+
+            // $mail->Body = $emailBody;
+            // $mail->AltBody = $emailBody;
+            $sendedEmail = $mail->Send();
+            $mail->ClearAllRecipients();
+            $mail->ClearAttachments();
+            
+
+            if ($sendedEmail) {  
+                $dataResponse['status'] = 1;
+            } else {
+                $dataResponse['message'] = 'Erro ao enviar solicitação, tente novamente.';
+                $dataResponse['status'] = 4;
+            }
 
         } else {
     
