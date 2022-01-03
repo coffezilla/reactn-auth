@@ -21,16 +21,6 @@ $userPassword = addslashes(trim($_POST['password']));
 $userPassword = str_replace(" ", "", $userPassword);
 $userPasswordMd5 = md5($userPassword);
 
-// // var
-// $userEmail = addslashes(trim($_POST['password']));
-// $userEmail = str_replace(" ", "", $userEmail);
-
-// $userPin = addslashes(trim($_POST['pin']));
-// $userPin = str_replace(" ", "", $userPin);
-
-// $currentTimestamp = Date('Y-m-d H:i:s');
-// $currentTimestampClean = str_replace(" ", "", $currentTimestamp);
-
 // verify
 $validInputs = false;
 

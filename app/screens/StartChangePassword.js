@@ -6,6 +6,7 @@ import {
 	StyleSheet,
 	TextInput,
 	Button,
+	Alert,
 } from 'react-native';
 
 // rest
@@ -41,7 +42,6 @@ const StartChangePassword = ({ navigation }) => {
 	const submitConfirmPassword = async () => {
 		await checkCurrentPassword(form.currentPassword).then(
 			(responseCurrentPassword) => {
-				console.log('CURRENT PASSWORD', responseCurrentPassword);
 				if (responseCurrentPassword.data.status === 1) {
 					navigation.push('SetNewPassword', {
 						pin: responseCurrentPassword.data.pin,
@@ -49,54 +49,11 @@ const StartChangePassword = ({ navigation }) => {
 						userStatus: 'LOGGED',
 					});
 				} else {
-					alert(responseCurrentPassword.data.message);
+					Alert.alert('Ops!', responseCurrentPassword.data.message);
 				}
 			}
 		);
 	};
-
-	// const resetEmailRecovery = async () => {
-	// 	await writeItemToStorageSupport({ recovery_email: null }).then(
-	// 		(response) => {
-	// 			setEmailRecovery(false);
-	// 			console.log('reset pin');
-	// 		}
-	// 	);
-	// };
-
-	// const submitStartForgotPassword = async () => {
-	// 	await submitStartForgotPasswordUser(form.email).then(
-	// 		(responseStartForgot) => {
-	// 			console.log('avo', responseStartForgot);
-	// 			if (responseStartForgot.data.status === 1) {
-	// 				writeItemToStorageSupport({ recovery_email: 'foo@gmail.com' }).then(
-	// 					(response) => {
-	// 						console.log('nintendo', response);
-	// 						setEmailRecovery(true);
-	// 						console.log('Created PIN');
-	// 					}
-	// 				);
-	// 			} else {
-	// 				alert(responseStartForgot.data.message);
-	// 			}
-	// 		}
-	// 	);
-	// };
-
-	// const checkLocalStorageEmail = async () => {
-	// 	console.log('lol', form);
-	// 	await readItemFromStorageSupport().then((response) => {
-	// 		if (response !== null) {
-	// 			if (response?.recovery_email !== null) {
-	// 				setEmailRecovery(true);
-	// 				setForm({ ...form, email: response.recovery_email });
-	// 				console.log('sapinho', response);
-	// 			} else {
-	// 				console.log('vazio email recovery');
-	// 			}
-	// 		}
-	// 	});
-	// };
 
 	return (
 		<View>

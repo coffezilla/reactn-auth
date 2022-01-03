@@ -6,6 +6,7 @@ import {
 	TextInput,
 	StyleSheet,
 	Button,
+	Alert,
 } from 'react-native';
 
 import { submitNewPasswordUser } from '../Api/authHandle';
@@ -31,8 +32,6 @@ const SetNewPassword = ({ route, navigation }) => {
 	}
 
 	const { pin, email, userStatus } = route.params;
-	console.log('puxei', userStatus);
-	// const [hasPin, setHasPin] = useState(false);
 	const [formPassword, setFormPassword] = useState({
 		pin,
 		email,
@@ -49,17 +48,13 @@ const SetNewPassword = ({ route, navigation }) => {
 
 	//
 	const submitNewPassword = async () => {
-		// alert('Saudade');
 		await submitNewPasswordUser(
 			formPassword.pin,
 			formPassword.email,
 			formPassword.newPassword,
 			formPassword.newPasswordConfirm
 		).then((responseNewPassword) => {
-			console.log('xxxx', responseNewPassword);
-			// console.log('slad', form.email);
 			if (responseNewPassword.data.status === 1) {
-				console.log('ALTERADO', userStatus);
 				writeItemToStorageSupport({ recovery_email: null }).then((response) => {
 					setFormPassword({
 						pin: '',
@@ -68,23 +63,18 @@ const SetNewPassword = ({ route, navigation }) => {
 						newPasswordConfirm: '',
 					});
 					if (userStatus === 'LOGGED') {
-						console.log('my friend logged');
 						navigation.reset({
 							routes: [{ name: 'Hub' }],
 						});
-						// navigation.push('Hub');
 					}
 					if (userStatus === 'NOT_LOGGED') {
-						console.log('my friend not logged');
 						navigation.reset({
 							routes: [{ name: 'Login' }],
 						});
-						// navigation.push('Login');
 					}
 				});
 			} else {
-				console.log('dispatch');
-				alert(responseNewPassword.data.message);
+				Alert.alert('Ops!', responseNewPassword.data.message);
 			}
 		});
 	};

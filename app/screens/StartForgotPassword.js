@@ -6,6 +6,7 @@ import {
 	StyleSheet,
 	TextInput,
 	Button,
+	Alert,
 } from 'react-native';
 
 // rest
@@ -41,7 +42,6 @@ const StartForgotPassword = ({ navigation }) => {
 	const submitConfirmPin = async () => {
 		await checkPinChangePassword(form.pin, form.email).then(
 			(responseCheckPin) => {
-				console.log('avo', responseCheckPin);
 				if (responseCheckPin.data.status === 1) {
 					// clear stacks
 					navigation.reset({
@@ -54,7 +54,7 @@ const StartForgotPassword = ({ navigation }) => {
 						userStatus: 'NOT_LOGGED',
 					});
 				} else {
-					alert(responseCheckPin.data.message);
+					Alert.alert('Ops!', responseCheckPin.data.message);
 				}
 			}
 		);
@@ -72,32 +72,26 @@ const StartForgotPassword = ({ navigation }) => {
 	const submitStartForgotPassword = async () => {
 		await submitStartForgotPasswordUser(form.email).then(
 			(responseStartForgot) => {
-				console.log('avo', responseStartForgot);
 				if (responseStartForgot.data.status === 1) {
 					writeItemToStorageSupport({ recovery_email: form.email }).then(
 						(response) => {
-							console.log('nintendo', response);
 							setEmailRecovery(true);
-							console.log('Created PIN');
 						}
 					);
 				} else {
-					alert(responseStartForgot.data.message);
+					Alert.alert('Ops!', responseStartForgot.data.message);
 				}
 			}
 		);
 	};
 
 	const checkLocalStorageEmail = async () => {
-		console.log('lol', form);
 		await readItemFromStorageSupport().then((response) => {
 			if (response !== null) {
 				if (response?.recovery_email !== null) {
 					setEmailRecovery(true);
 					setForm({ ...form, email: response.recovery_email });
-					console.log('sapinho', response);
 				} else {
-					console.log('vazio email recovery');
 				}
 			}
 		});

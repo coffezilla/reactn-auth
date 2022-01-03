@@ -58,7 +58,7 @@ export const getAuth = async (emailUser = 'NOT_LOGGED') => {
 };
 
 // GET
-// login
+// login suer
 export const submitLoginUser = async (userEmail, userPassword) => {
 	let userAuthToken = null;
 	await readItemFromStorage().then((responseStorage) => {
@@ -79,7 +79,6 @@ export const submitLoginUser = async (userEmail, userPassword) => {
 		headers: { Authorization: `Bearer ${userAuthToken}` },
 	})
 		.then((response) => {
-			console.log('loogggeed', response);
 			if (response.data.status === 1) {
 				serverResponse = {
 					data: {
@@ -124,7 +123,7 @@ export const submitLogoutUser = async () => {
 };
 
 // POST
-// NEED: NOTHING
+// checking auth data to know if
 export const checkAuth = async () => {
 	let userAuthToken = null;
 	let userAuthEmail = null;
@@ -134,13 +133,6 @@ export const checkAuth = async () => {
 		userAuthEmail = responseStorage.auth.email;
 		userAuthTimestamp = responseStorage.auth.timestamp;
 	});
-
-	// console.log(
-	// 	'asdfkjaksdfjaksjdfkajsfd',
-	// 	userAuthToken,
-	// 	userAuthEmail,
-	// 	userAuthTimestamp
-	// );
 
 	let serverResponse = { data: { status: 0 } };
 	let formData = new FormData();
@@ -155,7 +147,6 @@ export const checkAuth = async () => {
 		headers: { Authorization: `Bearer ${userAuthToken}` },
 	})
 		.then((response) => {
-			console.log('escrito', response.data);
 			// 1 - done
 			if (response.data.status === 1) {
 				serverResponse = {
@@ -178,7 +169,8 @@ export const checkAuth = async () => {
 };
 
 // signup
-export const submitSignupUser = async (form) => {
+// signup new user
+export const submitSignupUser = async (userEmail, userName, userPassword) => {
 	let userAuthToken = null;
 	await readItemFromStorage().then((responseStorage) => {
 		userAuthToken = responseStorage.auth.token;
@@ -187,9 +179,9 @@ export const submitSignupUser = async (form) => {
 	let serverResponse = { data: { status: 0 } };
 
 	let formData = new FormData();
-	formData.append('email', form.email);
-	formData.append('password', form.password);
-	formData.append('name', form.name);
+	formData.append('email', userEmail);
+	formData.append('name', userName);
+	formData.append('password', userPassword);
 
 	const END_POINT = END_POINT_BASE + '/auth/signup';
 	await axios({
@@ -231,9 +223,8 @@ export const submitSignupUser = async (form) => {
 	return serverResponse;
 };
 
-// delete account
 // GET
-// login
+// delete logged user
 export const submitDeleteUser = async (userEmail, userPassword) => {
 	let userAuthToken = null;
 	let userAuthTimestamp = null;
@@ -260,7 +251,6 @@ export const submitDeleteUser = async (userEmail, userPassword) => {
 		headers: { Authorization: `Bearer ${userAuthToken}` },
 	})
 		.then((response) => {
-			console.log('cabeine do tempo', response.data);
 			if (response.data.status === 1) {
 				serverResponse = {
 					data: {
@@ -294,7 +284,7 @@ export const submitDeleteUser = async (userEmail, userPassword) => {
 };
 
 // GET
-// start forgot password
+// set pin to forgot password
 export const submitStartForgotPasswordUser = async (userEmail) => {
 	let userAuthToken = null;
 	await readItemFromStorage().then((responseStorage) => {
@@ -314,7 +304,6 @@ export const submitStartForgotPasswordUser = async (userEmail) => {
 		headers: { Authorization: `Bearer ${userAuthToken}` },
 	})
 		.then((response) => {
-			// console.log('mass effec', response.data);
 			if (response.data.status === 1) {
 				serverResponse = {
 					data: {
@@ -365,7 +354,6 @@ export const checkPinChangePassword = async (userPin, userEmail) => {
 		headers: { Authorization: `Bearer ${userAuthToken}` },
 	})
 		.then((response) => {
-			console.log('PIN CHECK ', response.data);
 			if (response.data.status === 1) {
 				serverResponse = {
 					data: {
@@ -421,7 +409,6 @@ export const checkCurrentPassword = async (userPassword) => {
 		headers: { Authorization: `Bearer ${userAuthToken}` },
 	})
 		.then((response) => {
-			console.log('PIN CHECK ', response.data);
 			if (response.data.status === 1) {
 				serverResponse = {
 					data: {
@@ -481,7 +468,6 @@ export const submitNewPasswordUser = async (
 		headers: { Authorization: `Bearer ${userAuthToken}` },
 	})
 		.then((response) => {
-			console.log('PIN CHECK ', response.data);
 			if (response.data.status === 1) {
 				serverResponse = {
 					data: {

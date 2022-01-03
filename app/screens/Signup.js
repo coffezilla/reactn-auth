@@ -6,6 +6,7 @@ import {
 	ScrollView,
 	Button,
 	TextInput,
+	Alert,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -51,30 +52,30 @@ const Signup = () => {
 
 	// login user
 	const submitSignup = async () => {
-		await submitSignupUser(form).then((responseSignup) => {
-			console.log('xxxx', responseSignup);
-			// console.log('slad', form.email);
-			if (responseSignup.data.status === 1) {
-				getAuth(form.email)
-					.then((resAuth) => {
-						if (resAuth.data.status === 1) {
-							writeItemToStorage(resAuth.data).then((response) => {
-								dispatch(actSetLogin());
-							});
-							console.log('SIGNUP');
-						} else {
-							console.log('Erro auth');
-						}
-					})
-					.catch((error) => {
-						console.log('Erro auth, try again');
-					});
-			} else {
-				dispatch(actSetLogout());
-				console.log('dispatch');
-				alert(responseSignup.data.message);
+		await submitSignupUser(form.email, form.name, form.password).then(
+			(responseSignup) => {
+				if (responseSignup.data.status === 1) {
+					getAuth(form.email)
+						.then((resAuth) => {
+							if (resAuth.data.status === 1) {
+								writeItemToStorage(resAuth.data).then((response) => {
+									dispatch(actSetLogin());
+								});
+								console.log('SIGNUP');
+							} else {
+								console.log('Erro auth');
+							}
+						})
+						.catch((error) => {
+							console.log('Erro auth, try again');
+						});
+				} else {
+					dispatch(actSetLogout());
+					console.log('dispatch');
+					Alert.alert('Ops!', responseSignup.data.message);
+				}
 			}
-		});
+		);
 	};
 
 	return (

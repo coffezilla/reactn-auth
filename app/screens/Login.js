@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { Text, StyleSheet, View, ScrollView, Button } from 'react-native';
+import {
+	Text,
+	StyleSheet,
+	View,
+	ScrollView,
+	Button,
+	Alert,
+} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import MenuDebugger from '../components/Debuggers/MenuDebugger';
@@ -40,15 +47,13 @@ const Login = () => {
 	// login user
 	const submitLogin = async () => {
 		await submitLoginUser(form.email, form.password).then((responseLogin) => {
-			console.log('avo', responseLogin);
 			if (responseLogin.data.status === 1) {
 				writeItemToStorage(responseLogin.data).then((response) => {
-					console.log('saudade', response);
 					dispatch(actSetLogin());
 				});
 			} else {
 				dispatch(actSetLogout());
-				alert(responseLogin.data.message);
+				Alert.alert('Ops!', responseLogin.data.message);
 			}
 		});
 	};

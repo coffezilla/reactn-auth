@@ -12,7 +12,6 @@ $errors = array();
 // var
 $userEmail = addslashes(trim($_POST['auth_email']));
 $userEmail = str_replace(" ", "", $userEmail);
-// $userEmail = 'daaamn';
 
 $currentTimestamp = Date('Y-m-d H:i:s');
 $currentTimestampClean = str_replace(" ", "", $currentTimestamp);

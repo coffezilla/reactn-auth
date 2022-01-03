@@ -25,7 +25,6 @@ $userPassword = str_replace(" ", "", $userPassword);
 $userPasswordMd5 = md5($userPassword);
 
 // verify
-// $isNewUser = false;
 $validInputs = false;
 
 // check input

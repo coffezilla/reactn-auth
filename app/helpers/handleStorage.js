@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { LOCAL_STORAGE_STORE } from './Constrains';
+import { LOCAL_STORAGE_STORE, LOCAL_STORAGE_SUPPORT } from './Constrains';
 
 export const writeItemToStorage = async (value) => {
 	try {
@@ -18,7 +18,6 @@ export const readItemFromStorage = async () => {
 		return jsonValue != null ? JSON.parse(jsonValue) : null;
 	} catch (e) {
 		return e;
-		// error reading value
 	}
 };
 
@@ -26,28 +25,25 @@ export const readItemFromStorage = async () => {
 export const writeItemToStorageSupport = async (value) => {
 	try {
 		const jsonValue = JSON.stringify(value);
-		await AsyncStorage.setItem('@auth_pin', jsonValue);
+		await AsyncStorage.setItem(LOCAL_STORAGE_SUPPORT, jsonValue);
 		return jsonValue;
 	} catch (e) {
 		return e;
 	}
 };
 
+// handle storage support elements
 export const readItemFromStorageSupport = async () => {
 	try {
-		const jsonValue = await AsyncStorage.getItem('@auth_pin');
+		const jsonValue = await AsyncStorage.getItem(LOCAL_STORAGE_SUPPORT);
 		return jsonValue != null ? JSON.parse(jsonValue) : null;
 	} catch (e) {
 		return e;
-		// error reading value
 	}
 };
 
 export const clearAllFromStorage = async () => {
-	console.log('clear storage');
 	try {
 		await AsyncStorage.clear();
-	} catch (e) {
-		// clear error
-	}
+	} catch (e) {}
 };
