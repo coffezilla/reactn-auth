@@ -34,6 +34,14 @@ import {
 	clearAllFromStorage,
 } from '../helpers/handleStorage';
 
+// components
+import {
+	FormSampleInputText,
+	FormSampleInputReadOnly,
+} from '../components/FormSample';
+import { HeadersText } from '../components/HeadersText/HeadersText';
+import { CustomButtons } from '../components/CustomButtons/CustomButtons';
+
 const UserDelete = () => {
 	const [form, setForm] = useState({
 		email: 'foo@gmail.com',
@@ -95,45 +103,38 @@ const UserDelete = () => {
 	};
 
 	return (
-		<ScrollView style={styles.container}>
-			<MenuDebugger />
-			<MsDebugger name='delete' value={form} />
-			{/* <MsDebuggerRedux /> */}
-			{/* <MsDebuggerLocalStorage /> */}
-
-			<View
-				style={{
-					borderWidth: 1,
-					backgroundColor: 'yellow',
-				}}
-			>
-				<Text>Deletar perfil</Text>
-				<View>
-					<Text>Email</Text>
-					<TextInput
-						style={styles.input}
+		<View style={styles.container}>
+			<View style={styles.innerContainer}>
+				<View
+					style={{
+						flex: 1,
+						justifyContent: 'center',
+					}}
+				>
+					<FormSampleInputText
+						inputLabel='E-mail'
 						placeholder='Ex.: my@email.com'
 						onChangeText={(text) => handleForm('email', text)}
 						keyboardType='email-address'
 						autoCapitalize='none'
 						value={form.email}
 					/>
-				</View>
-				<View>
-					<Text>Password</Text>
-					<TextInput
-						style={styles.input}
+
+					<FormSampleInputText
+						inputLabel='Senha'
 						placeholder='******'
 						secureTextEntry={true}
 						onChangeText={(text) => handleForm('password', text)}
 						value={form.password}
 					/>
 				</View>
-				<View style={{ padding: 3, flex: 1 }}>
-					<Button title='DELETAR' onPress={askDeleteAccout} />
-				</View>
+				<CustomButtons
+					title='DELETAR CONTA'
+					type='DANGER'
+					onPress={askDeleteAccout}
+				/>
 			</View>
-		</ScrollView>
+		</View>
 	);
 };
 
@@ -142,10 +143,12 @@ export default UserDelete;
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: '#fff',
+		flex: 1,
 	},
-	input: {
-		borderWidth: 1,
-		height: 40,
-		marginBottom: 3,
+	innerContainer: {
+		marginVertical: 17,
+		marginHorizontal: 17,
+		justifyContent: 'space-between',
+		flex: 1,
 	},
 });

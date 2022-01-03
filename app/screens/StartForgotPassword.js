@@ -25,6 +25,11 @@ import {
 	clearAllFromStorage,
 } from '../helpers/handleStorage';
 
+// components
+import { FormSampleInputText } from '../components/FormSample';
+import { HeadersText } from '../components/HeadersText/HeadersText';
+import { CustomButtons } from '../components/CustomButtons/CustomButtons';
+
 const StartForgotPassword = ({ navigation }) => {
 	const [emailRecovery, setEmailRecovery] = useState(false);
 	const [form, setForm] = useState({
@@ -103,50 +108,49 @@ const StartForgotPassword = ({ navigation }) => {
 
 	if (emailRecovery) {
 		return (
-			<View>
-				<Text>Set New Password</Text>
-				<View
-					style={{
-						backgroundColor: 'white',
-						marginBottom: 10,
-						borderWidth: 1,
-					}}
-				>
-					<Text>Adicionar PIN</Text>
-					<View>
-						<TextInput
-							style={styles.input}
-							placeholder='000000'
+			<View style={styles.container}>
+				<View style={styles.innerContainer}>
+					<View
+						style={{
+							flex: 1,
+							justifyContent: 'center',
+						}}
+					>
+						<FormSampleInputText
+							inputLabel='PIN de recuperação'
+							placeholder='- - - - - -'
 							onChangeText={(text) => handleForm('pin', text)}
 							keyboardType='numeric'
+							maxLength={6}
+							inputStyle={{
+								fontSize: 30,
+								textAlign: 'center',
+							}}
 							value={form.pin}
 						/>
+						<CustomButtons title='CONFIRMAR' onPress={submitConfirmPin} />
 					</View>
-					<View style={{ padding: 3 }}>
-						<Button title='CONFIRMAR PIN' onPress={submitConfirmPin} />
-					</View>
-					<View style={{ padding: 3 }}>
-						<Button title='RECOLOCAR EMAIL' onPress={resetEmailRecovery} />
-					</View>
+					<CustomButtons
+						title='RE-ENVIAR E-MAIL'
+						type='PRIMARY_EMPTY'
+						onPress={resetEmailRecovery}
+					/>
 				</View>
 			</View>
 		);
 	}
 
 	return (
-		<View>
-			<Text>Start Forgot Password</Text>
-			<View
-				style={{
-					backgroundColor: 'white',
-					marginBottom: 10,
-					borderWidth: 1,
-				}}
-			>
-				<Text>Adicionar email para recuperar</Text>
-				<View>
-					<TextInput
-						style={styles.input}
+		<View style={styles.container}>
+			<View style={styles.innerContainer}>
+				<View
+					style={{
+						flex: 1,
+						justifyContent: 'center',
+					}}
+				>
+					<FormSampleInputText
+						inputLabel='E-mail cadastrado'
 						placeholder='Ex.: my@email.com'
 						onChangeText={(text) => handleForm('email', text)}
 						keyboardType='email-address'
@@ -154,9 +158,8 @@ const StartForgotPassword = ({ navigation }) => {
 						value={form.email}
 					/>
 				</View>
-				<View style={{ padding: 3 }}>
-					<Button title='RECUPERAR SENHA' onPress={submitStartForgotPassword} />
-				</View>
+
+				<CustomButtons title='CONFIRMAR' onPress={submitStartForgotPassword} />
 			</View>
 		</View>
 	);
@@ -165,18 +168,13 @@ const StartForgotPassword = ({ navigation }) => {
 export default StartForgotPassword;
 
 const styles = StyleSheet.create({
-	button: {
-		backgroundColor: '#f2f2f2',
-		padding: 10,
-		marginBottom: 3,
+	container: {
+		backgroundColor: '#fff',
+		flex: 1,
 	},
-	text: {
-		color: 'black',
-		fontSize: 20,
-	},
-	input: {
-		borderWidth: 1,
-		height: 40,
-		marginBottom: 3,
+	innerContainer: {
+		marginVertical: 17,
+		marginHorizontal: 17,
+		flex: 1,
 	},
 });

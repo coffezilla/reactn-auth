@@ -24,6 +24,11 @@ import {
 	clearAllFromStorage,
 } from '../helpers/handleStorage';
 
+// components
+import { FormSampleInputText } from '../components/FormSample';
+import { HeadersText } from '../components/HeadersText/HeadersText';
+import { CustomButtons } from '../components/CustomButtons/CustomButtons';
+
 const SetNewPassword = ({ route, navigation }) => {
 	// without params
 	if (route.params === undefined) {
@@ -84,51 +89,32 @@ const SetNewPassword = ({ route, navigation }) => {
 	};
 
 	return (
-		<ScrollView>
-			<Text>Set New Password</Text>
-			<MenuDebugger />
-			<MsDebugger value={formPassword} name='new pass' />
-			<View
-				style={{
-					backgroundColor: 'white',
-					marginBottom: 10,
-					borderWidth: 1,
-				}}
-			>
-				<Text>CONFIRMAR</Text>
-			</View>
-			<View
-				style={{
-					borderWidth: 1,
-					backgroundColor: 'orange',
-				}}
-			>
-				<Text>Alterar senha</Text>
-				<View>
-					<Text>Novo</Text>
-					<TextInput
-						style={styles.input}
+		<View style={styles.container}>
+			<View style={styles.innerContainer}>
+				<View
+					style={{
+						flex: 1,
+						justifyContent: 'center',
+					}}
+				>
+					<FormSampleInputText
+						inputLabel='Nova senha'
 						placeholder='******'
 						secureTextEntry={true}
 						onChangeText={(text) => handleForm('newPassword', text)}
 						value={formPassword.newPassword}
 					/>
-				</View>
-				<View>
-					<Text>Confirmar</Text>
-					<TextInput
-						style={styles.input}
+					<FormSampleInputText
+						inputLabel='Repetir senha'
 						placeholder='******'
 						secureTextEntry={true}
 						onChangeText={(text) => handleForm('newPasswordConfirm', text)}
 						value={formPassword.newPasswordConfirm}
 					/>
 				</View>
-				<View style={{ padding: 3 }}>
-					<Button title='ATUALIZAR PASSWORD' onPress={submitNewPassword} />
-				</View>
+				<CustomButtons title='CONFIRMAR PASSWORD' onPress={submitNewPassword} />
 			</View>
-		</ScrollView>
+		</View>
 	);
 };
 
@@ -137,10 +123,22 @@ export default SetNewPassword;
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: '#fff',
+		flex: 1,
 	},
-	input: {
-		borderWidth: 1,
-		height: 40,
-		marginBottom: 3,
+	innerContainer: {
+		marginVertical: 17,
+		marginHorizontal: 17,
+		flex: 1,
 	},
 });
+
+// const styles = StyleSheet.create({
+// 	container: {
+// 		backgroundColor: '#fff',
+// 	},
+// 	input: {
+// 		borderWidth: 1,
+// 		height: 40,
+// 		marginBottom: 3,
+// 	},
+// });

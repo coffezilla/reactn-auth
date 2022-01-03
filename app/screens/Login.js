@@ -1,41 +1,31 @@
 import { useState } from 'react';
 import {
-	Text,
 	StyleSheet,
 	View,
 	ScrollView,
-	Button,
 	Alert,
+	KeyboardAvoidingView,
 } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-
-import MenuDebugger from '../components/Debuggers/MenuDebugger';
-import MsDebugger, {
-	MsDebuggerRedux,
-	MsDebuggerLocalStorage,
-} from '../components/Debuggers/MsDebugger';
+import { useDispatch } from 'react-redux';
 
 // rest
-import { getAuth, submitLoginUser, submitLogoutUser } from '../Api/authHandle';
-
+import { submitLoginUser } from '../Api/authHandle';
 // redux
 import { actSetLogin, actSetLogout } from '../redux/ducks/User';
-
 // localstorage
-import {
-	readItemFromStorage,
-	writeItemToStorage,
-	clearAllFromStorage,
-} from '../helpers/handleStorage';
-import { TextInput } from 'react-native-gesture-handler';
+import { writeItemToStorage } from '../helpers/handleStorage';
 
-const Login = () => {
+// components
+import { FormSampleInputText } from '../components/FormSample';
+import { HeadersText } from '../components/HeadersText/HeadersText';
+import { CustomButtons } from '../components/CustomButtons/CustomButtons';
+
+const Login = ({ navigation }) => {
+	const dispatch = useDispatch();
 	const [form, setForm] = useState({
 		email: 'foo@gmail.com',
 		password: '123',
 	});
-	const RdxRoot = useSelector((state) => state);
-	const dispatch = useDispatch();
 
 	const handleForm = (inputName, inputText) => {
 		setForm({
@@ -59,40 +49,47 @@ const Login = () => {
 	};
 
 	return (
-		<ScrollView style={styles.container}>
-			<MenuDebugger />
-			<MsDebugger name='formulario' value={form} />
-			{/* <MsDebuggerRedux /> */}
-			{/* <MsDebuggerLocalStorage /> */}
-
-			<View>
-				<Text>LOGIN</Text>
-				<View>
-					<Text>Email</Text>
-					<TextInput
-						style={styles.input}
+		<View style={styles.container}>
+			<View style={styles.innerContainer}>
+				<View
+					style={{
+						flex: 1,
+						justifyContent: 'center',
+					}}
+				>
+					<FormSampleInputText
+						inputLabel='E-mail'
 						placeholder='Ex.: my@email.com'
 						onChangeText={(text) => handleForm('email', text)}
 						keyboardType='email-address'
 						autoCapitalize='none'
 						value={form.email}
 					/>
-				</View>
-				<View>
-					<Text>Password</Text>
-					<TextInput
-						style={styles.input}
+					<FormSampleInputText
+						inputLabel='Password'
 						placeholder='******'
 						secureTextEntry={true}
 						onChangeText={(text) => handleForm('password', text)}
 						value={form.password}
 					/>
+					<CustomButtons title='LOGIN' onPress={submitLogin} />
 				</View>
-				<View style={{ padding: 3, flex: 1 }}>
-					<Button title='LOGIN' onPress={submitLogin} />
+				<View>
+					<CustomButtons
+						title='CADASTRAR NOVA CONTA'
+						type='PRIMARY_CLEAN'
+						onPress={() => navigation.navigate('Signup')}
+						style={{ marginBottom: 0 }}
+					/>
+					<CustomButtons
+						title='ESQUECI MINHA SENHA'
+						type='PRIMARY_CLEAN'
+						onPress={() => navigation.navigate('StartForgotPassword')}
+						style={{ marginBottom: 0 }}
+					/>
 				</View>
 			</View>
-		</ScrollView>
+		</View>
 	);
 };
 
@@ -101,10 +98,12 @@ export default Login;
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: '#fff',
+		flex: 1,
 	},
-	input: {
-		borderWidth: 1,
-		height: 40,
-		marginBottom: 3,
+	innerContainer: {
+		marginVertical: 17,
+		marginHorizontal: 17,
+		justifyContent: 'space-between',
+		flex: 1,
 	},
 });

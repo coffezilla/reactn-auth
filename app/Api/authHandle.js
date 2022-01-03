@@ -3,11 +3,7 @@ import axios from 'axios';
 import { END_POINT_BASE } from './Api';
 
 // localstorage
-import {
-	readItemFromStorage,
-	writeItemToStorage,
-	clearAllFromStorage,
-} from '../helpers/handleStorage';
+import { readItemFromStorage } from '../helpers/handleStorage';
 
 // GET
 // get new token for rest authenticated

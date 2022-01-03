@@ -33,6 +33,11 @@ import {
 	clearAllFromStorage,
 } from '../helpers/handleStorage';
 
+// components
+import { FormSampleInputText } from '../components/FormSample';
+import { HeadersText } from '../components/HeadersText/HeadersText';
+import { CustomButtons } from '../components/CustomButtons/CustomButtons';
+
 const Hub = () => {
 	const RdxRoot = useSelector((state) => state);
 	const dispatch = useDispatch();

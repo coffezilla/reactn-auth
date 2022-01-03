@@ -10,29 +10,17 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
-import MenuDebugger from '../components/Debuggers/MenuDebugger';
-import MsDebugger, {
-	MsDebuggerRedux,
-	MsDebuggerLocalStorage,
-} from '../components/Debuggers/MsDebugger';
-
 // redux
 import { actSetLogin, actSetLogout } from '../redux/ducks/User';
-
 // rest
-import {
-	getAuth,
-	submitLoginUser,
-	submitLogoutUser,
-	submitSignupUser,
-} from '../Api/authHandle';
-
+import { getAuth, submitSignupUser } from '../Api/authHandle';
 // localstorage
-import {
-	readItemFromStorage,
-	writeItemToStorage,
-	clearAllFromStorage,
-} from '../helpers/handleStorage';
+import { writeItemToStorage } from '../helpers/handleStorage';
+
+// components
+import { FormSampleInputText } from '../components/FormSample';
+import { HeadersText } from '../components/HeadersText/HeadersText';
+import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const Signup = () => {
 	const dispatch = useDispatch();
@@ -80,45 +68,30 @@ const Signup = () => {
 
 	return (
 		<ScrollView style={styles.container}>
-			<MenuDebugger />
-			<MsDebugger name='formulario' value={form} />
-			{/* <MsDebuggerRedux /> */}
-			{/* <MsDebuggerLocalStorage /> */}
-			<View>
-				<Text>LOGIN</Text>
-				<View>
-					<Text>Name</Text>
-					<TextInput
-						style={styles.input}
-						placeholder='Ex.: John Wayne'
-						onChangeText={(text) => handleForm('name', text)}
-						value={form.name}
-					/>
-				</View>
-				<View>
-					<Text>Email</Text>
-					<TextInput
-						style={styles.input}
-						placeholder='Ex.: my@email.com'
-						autoCapitalize='none'
-						onChangeText={(text) => handleForm('email', text)}
-						keyboardType='email-address'
-						value={form.email}
-					/>
-				</View>
-				<View>
-					<Text>Password</Text>
-					<TextInput
-						secureTextEntry={true}
-						placeholder='******'
-						style={styles.input}
-						onChangeText={(text) => handleForm('password', text)}
-						value={form.password}
-					/>
-				</View>
-				<View style={{ padding: 3, flex: 1 }}>
-					<Button title='CADASTRAR' onPress={submitSignup} />
-				</View>
+			<View style={styles.innerContainer}>
+				<FormSampleInputText
+					inputLabel='Nome'
+					placeholder='Ex.: John Wayne'
+					onChangeText={(text) => handleForm('name', text)}
+					value={form.name}
+				/>
+				<FormSampleInputText
+					inputLabel='E-mail'
+					placeholder='Ex.: my@email.com'
+					autoCapitalize='none'
+					onChangeText={(text) => handleForm('email', text)}
+					keyboardType='email-address'
+					value={form.email}
+				/>
+				<FormSampleInputText
+					inputLabel='Senha'
+					secureTextEntry={true}
+					placeholder='******'
+					onChangeText={(text) => handleForm('password', text)}
+					value={form.password}
+				/>
+
+				<CustomButtons title='CADASTRAR' onPress={submitSignup} />
 			</View>
 		</ScrollView>
 	);
@@ -129,10 +102,11 @@ export default Signup;
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: '#fff',
+		flex: 1,
 	},
-	input: {
-		borderWidth: 1,
-		height: 40,
-		marginBottom: 3,
+	innerContainer: {
+		marginVertical: 17,
+		marginHorizontal: 17,
+		flex: 1,
 	},
 });

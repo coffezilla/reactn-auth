@@ -26,6 +26,11 @@ import {
 	clearAllFromStorage,
 } from '../helpers/handleStorage';
 
+// components
+import { FormSampleInputText } from '../components/FormSample';
+import { HeadersText } from '../components/HeadersText/HeadersText';
+import { CustomButtons } from '../components/CustomButtons/CustomButtons';
+
 const StartChangePassword = ({ navigation }) => {
 	const [emailRecovery, setEmailRecovery] = useState(false);
 	const [form, setForm] = useState({
@@ -56,28 +61,41 @@ const StartChangePassword = ({ navigation }) => {
 	};
 
 	return (
-		<View>
-			<Text>Start Change password</Text>
-			<View
-				style={{
-					backgroundColor: 'white',
-					marginBottom: 10,
-					borderWidth: 1,
-				}}
-			>
-				<Text>Adicionar password atual</Text>
-				<View>
-					<TextInput
-						style={styles.input}
+		<View style={styles.container}>
+			<View style={styles.innerContainer}>
+				{/* <Text>Start Change password</Text>
+				<View
+					style={{
+						backgroundColor: 'white',
+						marginBottom: 10,
+						borderWidth: 1,
+					}}
+				> */}
+				{/* <Text>Adicionar password atual</Text> */}
+				{/* <View> */}
+				<View
+					style={{
+						flex: 1,
+						justifyContent: 'center',
+					}}
+				>
+					<FormSampleInputText
+						inputLabel='Senha atual'
 						placeholder='******'
 						secureTextEntry={true}
 						onChangeText={(text) => handleForm('currentPassword', text)}
 						value={form.currentPassword}
 					/>
 				</View>
-				<View style={{ padding: 3 }}>
-					<Button title='CONFIRMAR PASSWORD' onPress={submitConfirmPassword} />
-				</View>
+				{/* </View> */}
+				{/* <View style={{ padding: 3 }}> */}
+				<CustomButtons
+					title='CONFIRMAR SENHA'
+					onPress={submitConfirmPassword}
+				/>
+				{/* <Button title='CONFIRMAR PASSWORD' onPress={submitConfirmPassword} /> */}
+				{/* </View> */}
+				{/* </View> */}
 			</View>
 		</View>
 	);
@@ -86,18 +104,13 @@ const StartChangePassword = ({ navigation }) => {
 export default StartChangePassword;
 
 const styles = StyleSheet.create({
-	button: {
-		backgroundColor: '#f2f2f2',
-		padding: 10,
-		marginBottom: 3,
+	container: {
+		backgroundColor: '#fff',
+		flex: 1,
 	},
-	text: {
-		color: 'black',
-		fontSize: 20,
-	},
-	input: {
-		borderWidth: 1,
-		height: 40,
-		marginBottom: 3,
+	innerContainer: {
+		marginVertical: 17,
+		marginHorizontal: 17,
+		flex: 1,
 	},
 });

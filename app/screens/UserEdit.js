@@ -34,6 +34,14 @@ import {
 	clearAllFromStorage,
 } from '../helpers/handleStorage';
 
+// components
+import {
+	FormSampleInputText,
+	FormSampleInputReadOnly,
+} from '../components/FormSample';
+import { HeadersText } from '../components/HeadersText/HeadersText';
+import { CustomButtons } from '../components/CustomButtons/CustomButtons';
+
 import { userEditData, getUserData } from '../Api/userHandle';
 
 const UserEdit = ({ navigation }) => {
@@ -81,24 +89,20 @@ const UserEdit = ({ navigation }) => {
 		);
 	}
 	return (
-		<View>
-			<Text>Edit User</Text>
-			<View>
-				<Text>Name</Text>
-				<TextInput
-					style={styles.input}
-					placeholder='Ex.: John Wayne'
-					onChangeText={(text) => handleForm('name', text)}
-					value={form.name}
-				/>
-			</View>
-			<View>
-				<Text>Email</Text>
-				<Text style={styles.input}>{form.email}</Text>
-			</View>
+		<View style={styles.container}>
+			<View style={styles.innerContainer}>
+				<View>
+					<FormSampleInputReadOnly inputLabel='E-mail' value={form.email} />
 
-			<View>
-				<Button title='EDITAR DADOS' onPress={() => submitEditUser()} />
+					<FormSampleInputText
+						inputLabel='Nome'
+						placeholder='Ex.: John Wayne'
+						onChangeText={(text) => handleForm('name', text)}
+						value={form.name}
+					/>
+				</View>
+
+				<CustomButtons title='CONFIRMAR EDIÇÃO' onPress={submitEditUser} />
 			</View>
 		</View>
 	);
@@ -109,10 +113,12 @@ export default UserEdit;
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: '#fff',
+		flex: 1,
 	},
-	input: {
-		borderWidth: 1,
-		height: 40,
-		marginBottom: 3,
+	innerContainer: {
+		marginVertical: 17,
+		marginHorizontal: 17,
+		justifyContent: 'space-between',
+		flex: 1,
 	},
 });
