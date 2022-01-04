@@ -1,8 +1,20 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+	StyleSheet,
+	Text,
+	View,
+	TouchableOpacity,
+	Platform,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { TransitionPresets } from '@react-navigation/stack';
+import {
+	TransitionPresets,
+	CardStyleInterpolators,
+} from '@react-navigation/stack';
+
+// icon
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // nav
 import { NavigationContainer } from '@react-navigation/native';
@@ -29,6 +41,7 @@ import {
 // screens
 import About from './screens/About';
 import Hub from './screens/Hub';
+import Preference from './screens/Preference';
 import UserEdit from './screens/UserEdit';
 import UserDelete from './screens/UserDelete';
 import Login from './screens/Login';
@@ -37,7 +50,7 @@ import SetNewPassword from './screens/SetNewPassword';
 import StartForgotPassword from './screens/StartForgotPassword';
 import StartChangePassword from './screens/StartChangePassword';
 
-const Routers = () => {
+const Routers = ({ navigation }) => {
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(true);
 	const RdxStatus = useSelector((state) => state.loginStatus);
@@ -130,95 +143,210 @@ const Routers = () => {
 		},
 	});
 
+	const headerTitleStyleCustom = {
+		headerTitleStyle: {
+			marginLeft: Platform.OS === 'ios' ? 0 : -14,
+		},
+	};
+
 	return (
-		<NavigationContainer>
-			<Stack.Navigator>
-				{RdxStatus === 'LOGGED' ? (
-					<>
-						<Stack.Screen
-							name='Hub'
-							component={Hub}
-							options={{
-								cardStyleInterpolator: forFade,
-							}}
-						/>
-						<Stack.Screen
-							name='UserEdit'
-							component={UserEdit}
-							options={{
-								title: 'UserEdit',
-								...TransitionPresets.SlideFromRightIOS,
-							}}
-						/>
-						<Stack.Screen
-							name='UserDelete'
-							component={UserDelete}
-							options={{
-								title: 'UserDelete',
-								...TransitionPresets.SlideFromRightIOS,
-							}}
-						/>
-						<Stack.Screen
-							name='StartChangePassword'
-							component={StartChangePassword}
-							options={{
-								title: 'StartChangePassword',
-								...TransitionPresets.SlideFromRightIOS,
-							}}
-						/>
-					</>
-				) : (
-					<>
-						<Stack.Screen
-							name='Login'
-							component={Login}
-							options={{
-								cardStyleInterpolator: forFade,
-							}}
-						/>
-						<Stack.Screen
-							name='Signup'
-							component={Signup}
-							options={{
-								title: 'Cadastrar',
-								...TransitionPresets.SlideFromRightIOS,
-							}}
-						/>
-						<Stack.Screen
-							name='StartForgotPassword'
-							component={StartForgotPassword}
-							options={{
-								title: 'StartForgotPassword',
-								...TransitionPresets.SlideFromRightIOS,
-							}}
-						/>
-					</>
-				)}
-				<Stack.Screen
-					name='About'
-					component={About}
-					options={{
-						title: 'Sobre',
-						...TransitionPresets.SlideFromRightIOS,
-					}}
-				/>
-				<Stack.Screen
-					name='SetNewPassword'
-					component={SetNewPassword}
-					options={{
-						title: 'SetNewPassword',
-						...TransitionPresets.SlideFromRightIOS,
-					}}
-				/>
-			</Stack.Navigator>
-		</NavigationContainer>
+		<Stack.Navigator>
+			{RdxStatus === 'LOGGED' ? (
+				<>
+					<Stack.Screen
+						name='Hub'
+						component={Hub}
+						options={{
+							...TransitionPresets.SlideFromRightIOS,
+							headerStyle: {
+								elevation: 0,
+								shadowOpacity: 0,
+							},
+							headerRight: () => {
+								return (
+									<TouchableOpacity
+										onPress={() => navigation.navigate('Preference')}
+										style={styles.headerIconRight}
+									>
+										<Ionicons
+											name='settings-outline'
+											type='Ionicons'
+											style={[styles.headerIconStyle, { fontSize: 22 }]}
+										/>
+									</TouchableOpacity>
+								);
+							},
+						}}
+					/>
+					<Stack.Screen
+						name='UserEdit'
+						component={UserEdit}
+						options={{
+							title: 'UserEdit',
+							...TransitionPresets.SlideFromRightIOS,
+							...headerTitleStyleCustom,
+						}}
+					/>
+					<Stack.Screen
+						name='UserDelete'
+						component={UserDelete}
+						options={{
+							title: 'UserDelete',
+							...TransitionPresets.SlideFromRightIOS,
+							...headerTitleStyleCustom,
+						}}
+					/>
+					<Stack.Screen
+						name='Preference'
+						component={Preference}
+						options={{
+							title: 'Preference',
+							...TransitionPresets.SlideFromRightIOS,
+							...headerTitleStyleCustom,
+							headerRight: () => {
+								return (
+									<TouchableOpacity
+										onPress={() => navigation.navigate('About')}
+										style={styles.headerIconRight}
+									>
+										<Ionicons
+											name='information-circle-outline'
+											type='Ionicons'
+											style={styles.headerIconStyle}
+										/>
+									</TouchableOpacity>
+								);
+							},
+						}}
+					/>
+					<Stack.Screen
+						name='StartChangePassword'
+						component={StartChangePassword}
+						options={{
+							title: 'StartChangePassword',
+							...TransitionPresets.SlideFromRightIOS,
+							...headerTitleStyleCustom,
+						}}
+					/>
+				</>
+			) : (
+				<>
+					<Stack.Screen
+						name='Login'
+						component={Login}
+						options={{
+							cardStyleInterpolator: forFade,
+							headerStyle: {
+								elevation: 0,
+								shadowOpacity: 0,
+							},
+							headerRight: () => {
+								return (
+									<TouchableOpacity
+										onPress={() => navigation.navigate('About')}
+										style={styles.headerIconRight}
+									>
+										<Ionicons
+											name='information-circle-outline'
+											type='Ionicons'
+											style={styles.headerIconStyle}
+										/>
+									</TouchableOpacity>
+								);
+							},
+						}}
+					/>
+					<Stack.Screen
+						name='Signup'
+						component={Signup}
+						options={{
+							title: 'Cadastrar',
+							...TransitionPresets.SlideFromRightIOS,
+							...headerTitleStyleCustom,
+						}}
+					/>
+					<Stack.Screen
+						name='StartForgotPassword'
+						component={StartForgotPassword}
+						options={{
+							title: 'StartForgotPassword',
+							...TransitionPresets.SlideFromRightIOS,
+							...headerTitleStyleCustom,
+						}}
+					/>
+				</>
+			)}
+			<Stack.Screen
+				name='About'
+				component={About}
+				screenOptions={{ presentation: 'modal' }}
+				options={{
+					title: 'Sobre',
+					cardStyleInterpolator:
+						Platform.OS === 'ios'
+							? CardStyleInterpolators.forModalPresentationIOS
+							: CardStyleInterpolators.forRevealFromBottomAndroid,
+					headerLeft: false,
+					headerRight: () => {
+						return (
+							<TouchableOpacity
+								onPress={() => navigation.goBack()}
+								style={styles.headerIconRight}
+							>
+								<Ionicons
+									name='chevron-down-outline'
+									type='Ionicons'
+									style={styles.headerIconStyle}
+								/>
+							</TouchableOpacity>
+						);
+					},
+					// ...headerTitleStyleCustom,
+				}}
+			/>
+			<Stack.Screen
+				name='SetNewPassword'
+				component={SetNewPassword}
+				options={{
+					title: 'SetNewPassword',
+					...TransitionPresets.SlideFromRightIOS,
+					...headerTitleStyleCustom,
+				}}
+			/>
+		</Stack.Navigator>
 	);
 };
 
 export default function App() {
 	return (
 		<Provider store={store}>
-			<Routers />
+			<NavigationContainer>
+				<Stack.Navigator>
+					<Stack.Screen
+						name='Routers'
+						component={Routers}
+						options={{
+							headerShown: false,
+						}}
+					/>
+				</Stack.Navigator>
+			</NavigationContainer>
 		</Provider>
 	);
 }
+
+const styles = StyleSheet.create({
+	headerIconRight: {
+		aspectRatio: 1 / 1,
+		height: 45,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 100,
+		overflow: 'hidden',
+		marginRight: 5,
+	},
+	headerIconStyle: {
+		color: 'black',
+		fontSize: 26,
+	},
+});

@@ -1,38 +1,14 @@
 import { useEffect, useState } from 'react';
-import {
-	Text,
-	View,
-	Pressable,
-	StyleSheet,
-	TextInput,
-	Button,
-	Alert,
-} from 'react-native';
+import { View, StyleSheet, Alert, SafeAreaView } from 'react-native';
 
 // rest
-import {
-	getAuth,
-	submitLoginUser,
-	submitLogoutUser,
-	submitStartForgotPasswordUser,
-	checkPinChangePassword,
-	checkCurrentPassword,
-} from '../Api/authHandle';
-
-// localstorage
-import {
-	readItemFromStorageSupport,
-	writeItemToStorageSupport,
-	clearAllFromStorage,
-} from '../helpers/handleStorage';
+import { checkCurrentPassword } from '../Api/authHandle';
 
 // components
 import { FormSampleInputText } from '../components/FormSample';
-import { HeadersText } from '../components/HeadersText/HeadersText';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const StartChangePassword = ({ navigation }) => {
-	const [emailRecovery, setEmailRecovery] = useState(false);
 	const [form, setForm] = useState({
 		currentPassword: '',
 	});
@@ -61,18 +37,8 @@ const StartChangePassword = ({ navigation }) => {
 	};
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<View style={styles.innerContainer}>
-				{/* <Text>Start Change password</Text>
-				<View
-					style={{
-						backgroundColor: 'white',
-						marginBottom: 10,
-						borderWidth: 1,
-					}}
-				> */}
-				{/* <Text>Adicionar password atual</Text> */}
-				{/* <View> */}
 				<View
 					style={{
 						flex: 1,
@@ -87,17 +53,12 @@ const StartChangePassword = ({ navigation }) => {
 						value={form.currentPassword}
 					/>
 				</View>
-				{/* </View> */}
-				{/* <View style={{ padding: 3 }}> */}
 				<CustomButtons
 					title='CONFIRMAR SENHA'
 					onPress={submitConfirmPassword}
 				/>
-				{/* <Button title='CONFIRMAR PASSWORD' onPress={submitConfirmPassword} /> */}
-				{/* </View> */}
-				{/* </View> */}
 			</View>
-		</View>
+		</SafeAreaView>
 	);
 };
 

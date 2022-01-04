@@ -1,13 +1,5 @@
 import { useState } from 'react';
-import {
-	Text,
-	StyleSheet,
-	View,
-	ScrollView,
-	Button,
-	TextInput,
-	Alert,
-} from 'react-native';
+import { StyleSheet, View, Alert, SafeAreaView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import MenuDebugger from '../components/Debuggers/MenuDebugger';
@@ -17,29 +9,19 @@ import MsDebugger, {
 } from '../components/Debuggers/MsDebugger';
 
 // redux
-import { actSetLogin, actSetLogout } from '../redux/ducks/User';
+import { actSetLogout } from '../redux/ducks/User';
 
 // rest
-import {
-	getAuth,
-	submitLoginUser,
-	submitLogoutUser,
-	submitDeleteUser,
-} from '../Api/authHandle';
+import { getAuth, submitDeleteUser } from '../Api/authHandle';
 
 // localstorage
 import {
-	readItemFromStorage,
 	writeItemToStorage,
 	clearAllFromStorage,
 } from '../helpers/handleStorage';
 
 // components
-import {
-	FormSampleInputText,
-	FormSampleInputReadOnly,
-} from '../components/FormSample';
-import { HeadersText } from '../components/HeadersText/HeadersText';
+import { FormSampleInputText } from '../components/FormSample';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const UserDelete = () => {
@@ -88,7 +70,7 @@ const UserDelete = () => {
 		});
 	};
 
-	const askDeleteAccout = () => {
+	const promptDeleteAccout = () => {
 		Alert.alert(
 			'Deletar conta?',
 			'Pressione OK para confirmar a exclusão definitiva desta conta. Esta operação não pode ser desfeita.',
@@ -103,7 +85,7 @@ const UserDelete = () => {
 	};
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<View style={styles.innerContainer}>
 				<View
 					style={{
@@ -131,10 +113,10 @@ const UserDelete = () => {
 				<CustomButtons
 					title='DELETAR CONTA'
 					type='DANGER'
-					onPress={askDeleteAccout}
+					onPress={promptDeleteAccout}
 				/>
 			</View>
-		</View>
+		</SafeAreaView>
 	);
 };
 

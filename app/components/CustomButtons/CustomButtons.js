@@ -61,14 +61,66 @@ export const CustomButtons = ({
 	);
 };
 
+// link
+export const CustomButtonLink = ({
+	style,
+	title = 'BUTTON',
+	onPress = null,
+	type = 'PRIMARY',
+}) => {
+	// check if is pressed to tint the text inside pressable
+	const [buttonPressed, setButtonPressed] = useState(false);
+
+	return (
+		<Pressable
+			onPress={onPress}
+			onPressIn={() => setButtonPressed(true)}
+			onPressOut={() => setButtonPressed(false)}
+			style={({ pressed }) => [
+				customStyles.linkDefault,
+
+				type === 'PRIMARY' &&
+					(pressed
+						? customStyles.primaryLinkPressed
+						: customStyles.primaryLinkDefault),
+
+				type === 'DANGER' &&
+					(pressed
+						? customStyles.dangerLinkPressed
+						: customStyles.dangerLinkDefault),
+
+				style,
+			]}
+		>
+			<Text
+				style={[
+					customStyles.linkText,
+					type === 'PRIMARY' && { color: '#049BFF' },
+					type === 'DANGER' && { color: '#FF234A' },
+				]}
+				numberOfLines={1}
+			>
+				{title}
+			</Text>
+		</Pressable>
+	);
+};
+
 const customStyles = StyleSheet.create({
 	buttonDefault: {
 		borderRadius: 8,
-		height: 45,
+		height: 40,
 		padding: 0,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
+	linkDefault: {
+		height: 45,
+		padding: 0,
+		justifyContent: 'center',
+	},
+
+	// primary
 	primaryDefault: {
 		elevation: 1,
 		backgroundColor: '#049BFF',
@@ -87,6 +139,17 @@ const customStyles = StyleSheet.create({
 		backgroundColor: '#049BFF',
 	},
 
+	// primary link
+	primaryLinkDefault: {
+		// elevation: 1,
+		backgroundColor: 'white',
+	},
+	primaryLinkPressed: {
+		// elevation: 1,
+		backgroundColor: '#F5F3F3',
+	},
+
+	// danger
 	dangerDefault: {
 		elevation: 1,
 		backgroundColor: '#FF234A',
@@ -105,6 +168,17 @@ const customStyles = StyleSheet.create({
 		backgroundColor: '#FF234A',
 	},
 
+	// danger link
+	dangerLinkDefault: {
+		// elevation: 1,
+		backgroundColor: 'white',
+	},
+	dangerLinkPressed: {
+		// elevation: 1,
+		backgroundColor: '#F5F3F3',
+	},
+
+	// clean
 	cleanDefault: {
 		backgroundColor: 'transparent',
 	},
@@ -112,9 +186,17 @@ const customStyles = StyleSheet.create({
 		backgroundColor: '#F5F3F3',
 	},
 
+	// text
 	text: {
+		fontSize: 16,
+		fontWeight: 'normal',
+		color: 'white',
+	},
+
+	// text
+	linkText: {
 		fontSize: 18,
-		fontWeight: 'bold',
+		// fontWeight: 'bold',
 		color: 'white',
 	},
 });

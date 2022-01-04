@@ -1,13 +1,5 @@
 import { useState } from 'react';
-import {
-	Text,
-	View,
-	ScrollView,
-	TextInput,
-	StyleSheet,
-	Button,
-	Alert,
-} from 'react-native';
+import { View, StyleSheet, Alert, SafeAreaView } from 'react-native';
 
 import { submitNewPasswordUser } from '../Api/authHandle';
 
@@ -18,15 +10,10 @@ import MsDebugger, {
 } from '../components/Debuggers/MsDebugger';
 
 // localstorage
-import {
-	readItemFromStorageSupport,
-	writeItemToStorageSupport,
-	clearAllFromStorage,
-} from '../helpers/handleStorage';
+import { writeItemToStorageSupport } from '../helpers/handleStorage';
 
 // components
 import { FormSampleInputText } from '../components/FormSample';
-import { HeadersText } from '../components/HeadersText/HeadersText';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const SetNewPassword = ({ route, navigation }) => {
@@ -89,7 +76,7 @@ const SetNewPassword = ({ route, navigation }) => {
 	};
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<View style={styles.innerContainer}>
 				<View
 					style={{
@@ -114,7 +101,7 @@ const SetNewPassword = ({ route, navigation }) => {
 				</View>
 				<CustomButtons title='CONFIRMAR PASSWORD' onPress={submitNewPassword} />
 			</View>
-		</View>
+		</SafeAreaView>
 	);
 };
 
@@ -131,14 +118,3 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 });
-
-// const styles = StyleSheet.create({
-// 	container: {
-// 		backgroundColor: '#fff',
-// 	},
-// 	input: {
-// 		borderWidth: 1,
-// 		height: 40,
-// 		marginBottom: 3,
-// 	},
-// });

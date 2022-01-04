@@ -1,21 +1,20 @@
-import { useEffect, useState } from 'react';
-import { Text, StyleSheet, View, ScrollView } from 'react-native';
-import { useSelector } from 'react-redux';
+import { Text, StyleSheet, View, ScrollView, SafeAreaView } from 'react-native';
 
 import MenuDebugger from '../components/Debuggers/MenuDebugger';
-
-import {
+import MsDebugger, {
 	MsDebuggerRedux,
 	MsDebuggerLocalStorage,
 } from '../components/Debuggers/MsDebugger';
 
 const About = () => {
 	return (
-		<ScrollView style={styles.container}>
-			<MenuDebugger />
-			<MsDebuggerRedux />
-			<MsDebuggerLocalStorage />
-		</ScrollView>
+		<SafeAreaView style={styles.container}>
+			<View style={styles.innerContainer}>
+				<View>
+					<Text>ABOUT...</Text>
+				</View>
+			</View>
+		</SafeAreaView>
 	);
 };
 
@@ -24,5 +23,12 @@ export default About;
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: '#fff',
+		flex: 1,
+	},
+	innerContainer: {
+		marginVertical: 17,
+		marginHorizontal: 17,
+		justifyContent: 'space-between',
+		flex: 1,
 	},
 });

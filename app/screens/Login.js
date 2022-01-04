@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import {
-	StyleSheet,
-	View,
-	ScrollView,
-	Alert,
-	KeyboardAvoidingView,
-} from 'react-native';
+import { StyleSheet, View, Alert, SafeAreaView } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 // rest
@@ -17,7 +11,6 @@ import { writeItemToStorage } from '../helpers/handleStorage';
 
 // components
 import { FormSampleInputText } from '../components/FormSample';
-import { HeadersText } from '../components/HeadersText/HeadersText';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const Login = ({ navigation }) => {
@@ -49,7 +42,7 @@ const Login = ({ navigation }) => {
 	};
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<View style={styles.innerContainer}>
 				<View
 					style={{
@@ -89,7 +82,7 @@ const Login = ({ navigation }) => {
 					/>
 				</View>
 			</View>
-		</View>
+		</SafeAreaView>
 	);
 };
 

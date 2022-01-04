@@ -1,12 +1,4 @@
-import { useState } from 'react';
-import {
-	Text,
-	StyleSheet,
-	View,
-	ScrollView,
-	Button,
-	TextInput,
-} from 'react-native';
+import { Text, StyleSheet, View, ScrollView, SafeAreaView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import MenuDebugger from '../components/Debuggers/MenuDebugger';
@@ -15,67 +7,17 @@ import MsDebugger, {
 	MsDebuggerLocalStorage,
 } from '../components/Debuggers/MsDebugger';
 
-// redux
-import { actSetLogin, actSetLogout } from '../redux/ducks/User';
-
-// rest
-import {
-	getAuth,
-	submitLoginUser,
-	submitLogoutUser,
-	submitDeleteUser,
-} from '../Api/authHandle';
-
-// localstorage
-import {
-	readItemFromStorage,
-	writeItemToStorage,
-	clearAllFromStorage,
-} from '../helpers/handleStorage';
-
-// components
-import { FormSampleInputText } from '../components/FormSample';
-import { HeadersText } from '../components/HeadersText/HeadersText';
-import { CustomButtons } from '../components/CustomButtons/CustomButtons';
-
 const Hub = () => {
 	const RdxRoot = useSelector((state) => state);
-	const dispatch = useDispatch();
-
-	// loggout user
-	const submitLogout = async () => {
-		await submitLogoutUser().then((responseLogout) => {
-			clearAllFromStorage();
-			dispatch(actSetLogout());
-		});
-
-		await getAuth()
-			.then((resAuth) => {
-				if (resAuth.data.status === 1) {
-					writeItemToStorage(resAuth.data).then((response) => {
-						// set loading apenas depois de pegar um token
-					});
-				} else {
-					console.log('Erro auth');
-				}
-			})
-			.catch((error) => {
-				console.log('Erro auth, try again');
-			});
-	};
 
 	return (
-		<ScrollView style={styles.container}>
-			<MenuDebugger />
-			{/* <MsDebuggerRedux /> */}
-			{/* <MsDebuggerLocalStorage /> */}
-			<View>
-				<Text>LOGIN</Text>
-				<View style={{ padding: 3, flex: 1 }}>
-					<Button title='LOGOUT' onPress={submitLogout} />
+		<SafeAreaView style={styles.container}>
+			<View style={styles.innerContainer}>
+				<View>
+					<Text>HUB...</Text>
 				</View>
 			</View>
-		</ScrollView>
+		</SafeAreaView>
 	);
 };
 
@@ -84,10 +26,12 @@ export default Hub;
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: '#fff',
+		flex: 1,
 	},
-	input: {
-		borderWidth: 1,
-		height: 40,
-		marginBottom: 3,
+	innerContainer: {
+		marginVertical: 17,
+		marginHorizontal: 17,
+		justifyContent: 'space-between',
+		flex: 1,
 	},
 });

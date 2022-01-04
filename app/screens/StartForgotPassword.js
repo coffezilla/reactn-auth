@@ -1,19 +1,8 @@
 import { useEffect, useState } from 'react';
-import {
-	Text,
-	View,
-	Pressable,
-	StyleSheet,
-	TextInput,
-	Button,
-	Alert,
-} from 'react-native';
+import { View, StyleSheet, Alert, SafeAreaView } from 'react-native';
 
 // rest
 import {
-	getAuth,
-	submitLoginUser,
-	submitLogoutUser,
 	submitStartForgotPasswordUser,
 	checkPinChangePassword,
 } from '../Api/authHandle';
@@ -22,12 +11,10 @@ import {
 import {
 	readItemFromStorageSupport,
 	writeItemToStorageSupport,
-	clearAllFromStorage,
 } from '../helpers/handleStorage';
 
 // components
 import { FormSampleInputText } from '../components/FormSample';
-import { HeadersText } from '../components/HeadersText/HeadersText';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const StartForgotPassword = ({ navigation }) => {
@@ -108,7 +95,7 @@ const StartForgotPassword = ({ navigation }) => {
 
 	if (emailRecovery) {
 		return (
-			<View style={styles.container}>
+			<SafeAreaView style={styles.container}>
 				<View style={styles.innerContainer}>
 					<View
 						style={{
@@ -136,7 +123,7 @@ const StartForgotPassword = ({ navigation }) => {
 						onPress={resetEmailRecovery}
 					/>
 				</View>
-			</View>
+			</SafeAreaView>
 		);
 	}
 

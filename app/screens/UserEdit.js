@@ -1,14 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-	Text,
-	StyleSheet,
-	View,
-	ScrollView,
-	Button,
-	TextInput,
-	Alert,
-} from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { Text, StyleSheet, View, Alert, SafeAreaView } from 'react-native';
 
 import MenuDebugger from '../components/Debuggers/MenuDebugger';
 import MsDebugger, {
@@ -16,30 +7,11 @@ import MsDebugger, {
 	MsDebuggerLocalStorage,
 } from '../components/Debuggers/MsDebugger';
 
-// redux
-import { actSetLogin, actSetLogout } from '../redux/ducks/User';
-
-// rest
-import {
-	getAuth,
-	submitLoginUser,
-	submitLogoutUser,
-	submitDeleteUser,
-} from '../Api/authHandle';
-
-// localstorage
-import {
-	readItemFromStorage,
-	writeItemToStorage,
-	clearAllFromStorage,
-} from '../helpers/handleStorage';
-
 // components
 import {
 	FormSampleInputText,
 	FormSampleInputReadOnly,
 } from '../components/FormSample';
-import { HeadersText } from '../components/HeadersText/HeadersText';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 import { userEditData, getUserData } from '../Api/userHandle';
@@ -89,7 +61,7 @@ const UserEdit = ({ navigation }) => {
 		);
 	}
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<View style={styles.innerContainer}>
 				<View>
 					<FormSampleInputReadOnly inputLabel='E-mail' value={form.email} />
@@ -104,7 +76,7 @@ const UserEdit = ({ navigation }) => {
 
 				<CustomButtons title='CONFIRMAR EDIÇÃO' onPress={submitEditUser} />
 			</View>
-		</View>
+		</SafeAreaView>
 	);
 };
 

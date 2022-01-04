@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import {
-	Text,
 	StyleSheet,
 	View,
 	ScrollView,
-	Button,
-	TextInput,
 	Alert,
+	SafeAreaView,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -19,7 +17,6 @@ import { writeItemToStorage } from '../helpers/handleStorage';
 
 // components
 import { FormSampleInputText } from '../components/FormSample';
-import { HeadersText } from '../components/HeadersText/HeadersText';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const Signup = () => {
@@ -68,31 +65,33 @@ const Signup = () => {
 
 	return (
 		<ScrollView style={styles.container}>
-			<View style={styles.innerContainer}>
-				<FormSampleInputText
-					inputLabel='Nome'
-					placeholder='Ex.: John Wayne'
-					onChangeText={(text) => handleForm('name', text)}
-					value={form.name}
-				/>
-				<FormSampleInputText
-					inputLabel='E-mail'
-					placeholder='Ex.: my@email.com'
-					autoCapitalize='none'
-					onChangeText={(text) => handleForm('email', text)}
-					keyboardType='email-address'
-					value={form.email}
-				/>
-				<FormSampleInputText
-					inputLabel='Senha'
-					secureTextEntry={true}
-					placeholder='******'
-					onChangeText={(text) => handleForm('password', text)}
-					value={form.password}
-				/>
+			<SafeAreaView>
+				<View style={styles.innerContainer}>
+					<FormSampleInputText
+						inputLabel='Nome'
+						placeholder='Ex.: John Wayne'
+						onChangeText={(text) => handleForm('name', text)}
+						value={form.name}
+					/>
+					<FormSampleInputText
+						inputLabel='E-mail'
+						placeholder='Ex.: my@email.com'
+						autoCapitalize='none'
+						onChangeText={(text) => handleForm('email', text)}
+						keyboardType='email-address'
+						value={form.email}
+					/>
+					<FormSampleInputText
+						inputLabel='Senha'
+						secureTextEntry={true}
+						placeholder='******'
+						onChangeText={(text) => handleForm('password', text)}
+						value={form.password}
+					/>
 
-				<CustomButtons title='CADASTRAR' onPress={submitSignup} />
-			</View>
+					<CustomButtons title='CADASTRAR' onPress={submitSignup} />
+				</View>
+			</SafeAreaView>
 		</ScrollView>
 	);
 };
