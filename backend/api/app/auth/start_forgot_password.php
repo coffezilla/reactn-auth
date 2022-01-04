@@ -3,6 +3,7 @@
 header('Content-Type: application/json; charset=UTF-8');
 
 include "../connect/bd_connect.php";
+include "../helpers/utils.php";
 
 //
 $dataResponse = array();
@@ -18,19 +19,9 @@ $currentTimestamp = Date('Y-m-d H:i:s');
 $currentTimestampClean = str_replace(" ", "", $currentTimestamp);
 
 // verify
-$validInputs = false;
+$checkers = array($userEmail);
+$validInputs = checkEmptyData($checkers, 3);
 
-// check input
-if(
-$userEmail != '' && strlen($userEmail) >= 3
-) {
-    // pode passar
-    $validInputs = true;
-
-} else {
-    $dataResponse['message'] = 'Campo em branco';
-    $dataResponse['status'] = 2;
-}
 
 // JWT auth 
 include "../connect/auth.php";
@@ -116,6 +107,9 @@ if($isAuth) {
 
         }
 
+    } else {
+        $dataResponse['message'] = 'Campo em branco';
+        $dataResponse['status'] = 2;
     }
 
 } else {

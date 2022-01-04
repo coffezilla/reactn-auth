@@ -3,6 +3,7 @@
 header('Content-Type: application/json; charset=UTF-8');
 
 include "../connect/bd_connect.php";
+include "../helpers/utils.php";
 
 //
 $dataResponse = array();
@@ -26,24 +27,10 @@ $currentTimestamp = Date('Y-m-d H:i:s');
 $currentTimestampClean = str_replace(" ", "", $currentTimestamp);
 
 // verify
-$validInputs = false;
+$checkers = array($userEmail, $userNewPassword, $userNewPasswordConfirm, $userPin);
+$validInputs = checkEmptyData($checkers, 3);
+
 $validPassword = false;
-
-// check input
-if(
-$userEmail != '' && strlen($userEmail) >= 3 &&
-$userNewPassword != '' && strlen($userNewPassword) >= 3 &&
-$userNewPasswordConfirm != '' && strlen($userNewPasswordConfirm) >= 3 &&
-$userPin != '' && strlen($userPin) >= 3
-) {
-    // pode passar
-    $validInputs = true;
-
-} else {
-    $dataResponse['message'] = 'Campo em branco';
-    $dataResponse['status'] = 2;
-}
-
 
 // check passwords
 if($userNewPassword == $userNewPasswordConfirm) {
@@ -88,7 +75,11 @@ if($isAuth) {
             $dataResponse['status'] = 4;
         }
 
+    } else {
+        $dataResponse['message'] = 'Campo em branco ou campo inválido';
+        $dataResponse['status'] = 2;
     }
+
 
 } else {
     // nao autehnticado

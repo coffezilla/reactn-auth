@@ -3,6 +3,7 @@
 header('Content-Type: application/json; charset=UTF-8');
 
 include "../connect/bd_connect.php";
+include "../helpers/utils.php";
 
 //
 $dataResponse = array();
@@ -25,7 +26,10 @@ $currentTimestampClean = str_replace(" ", "", $currentTimestamp);
 
 // verify
 $isNewUser = false;
-$validInputs = false;
+// verify
+$checkers = array($userEmail, $userName, $userPassword);
+$validInputs = checkEmptyData($checkers, 3);
+
 
 // JWT auth 
 include "../connect/auth.php";
@@ -39,22 +43,6 @@ if($isAuth) {
     // verifica se nao esta vazio
     // verifica se possuem caracteres minimos
     // check input
-    if(
-        $userEmail != '' && 
-        strlen($userEmail) >= 3 && 
-        $userName != '' && 
-        strlen($userName) >= 3 && 
-        $userPassword != '' && 
-        strlen($userPassword) >= 3
-    ) {
-        // pode passar
-        $validInputs = true;
-
-    } else {
-        $dataResponse['message'] = 'Campo em branco';
-        $dataResponse['status'] = 2;
-    }
-
 
     if($validInputs) {
 
@@ -80,6 +68,9 @@ if($isAuth) {
             $dataResponse['status'] = 3;
             $dataResponse['message'] = 'Este e-mail já foi utilizado';
         }
+    } else {
+        $dataResponse['message'] = 'Campo em branco';
+        $dataResponse['status'] = 2;
     }
 
 

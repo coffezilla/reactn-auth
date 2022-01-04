@@ -1,7 +1,9 @@
 <?php 
 
 header('Content-Type: application/json; charset=UTF-8');
+
 include "../connect/bd_connect.php";
+include "../helpers/utils.php";
 
 //
 $dataResponse = array();
@@ -17,21 +19,13 @@ $currentTimestamp = Date('Y-m-d H:i:s');
 $currentTimestampClean = str_replace(" ", "", $currentTimestamp);
 
 // verify
-$validInputs = false;
+$checkers = array($userEmail, $userPassword, $currentTimestamp);
+$validInputs = checkEmptyData($checkers, 3);
 
 // JWT auth
 include "../connect/auth.php";
-$token = createJWTAuth($userEmail, $currentTimestampClean, $JWTServerkey);
+$token = createJWTAuth($userEmail);
 
-// // check input
-if( $userEmail == '' || strlen($userEmail) <= 3 ) {
-//     // pode passar
-    $dataResponse['message'] = 'Campo em branco';
-    $dataResponse['status'] = 2;
-
-} else {
-    $validInputs = true;
-}
 
 if($validInputs) {
 
@@ -44,6 +38,9 @@ if($validInputs) {
     $dataResponse['token'] = $token;
     $dataResponse['timestamp'] = $currentTimestamp;
     $dataResponse['status'] = 1;
+} else {
+    $dataResponse['message'] = 'Campo em branco';
+    $dataResponse['status'] = 2;    
 }
 
 

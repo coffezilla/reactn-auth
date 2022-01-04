@@ -3,6 +3,7 @@
 header('Content-Type: application/json; charset=UTF-8');
 
 include "../connect/bd_connect.php";
+include "../helpers/utils.php";
 
 //
 $dataResponse = array();
@@ -28,21 +29,24 @@ $userName = str_replace(" ", "", $userName);
 // ========================================================
 // CHECKING VALIDATION
 
-$validInputs = false;
+// verify
+$checkers = array($authUserEmail, $currentTimestampClean, $userName);
+$validInputs = checkEmptyData($checkers, 3);
 
-// check input
-if(
-$authUserEmail != '' && strlen($authUserEmail) >= 3 &&
-$currentTimestampClean != '' && strlen($currentTimestampClean) >= 3 &&
-$userName != '' && strlen($userName) >= 3
-) {
-    // pode passar
-    $validInputs = true;
 
-} else {
-    $dataResponse['message'] = 'Campo em branco';
-    $dataResponse['status'] = 2;
-}
+// // check input
+// if(
+// $authUserEmail != '' && strlen($authUserEmail) >= 3 &&
+// $currentTimestampClean != '' && strlen($currentTimestampClean) >= 3 &&
+// $userName != '' && strlen($userName) >= 3
+// ) {
+//     // pode passar
+//     $validInputs = true;
+
+// } else {
+//     $dataResponse['message'] = 'Campo em branco';
+//     $dataResponse['status'] = 2;
+// }
 
 // ========================================================
 
@@ -75,6 +79,9 @@ if($isAuth) {
             $dataResponse['message'] = 'Usuário não autenticado';
             $dataResponse['status'] = 4;
         }
+    } else {
+        $dataResponse['message'] = 'Campo em branco';
+        $dataResponse['status'] = 2;
     }
 } else {
     // nao autehnticado
