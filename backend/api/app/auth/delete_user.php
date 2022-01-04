@@ -3,6 +3,7 @@
 header('Content-Type: application/json; charset=UTF-8');
 
 include "../connect/bd_connect.php";
+include "../helpers/utils.php";
 
 //
 $dataResponse = array();
@@ -26,20 +27,9 @@ $userPasswordMd5 = md5($userPassword);
 
 // verify
 $validInputs = false;
-
-// check input
-if(
-$userEmail != '' && strlen($userEmail) >= 3 &&
-$authUserEmail != '' && strlen($authUserEmail) >= 3 &&
-$userPassword != '' && strlen($userPassword) >= 3
-) {
-    // pode passar
-    $validInputs = true;
-
-} else {
-    $dataResponse['message'] = 'Campo em branco';
-    $dataResponse['status'] = 2;
-}
+// verify
+$checkers = array($userEmail, $authUserEmail, $userPassword);
+$validInputs = checkEmptyData($checkers, 3);
 
 
 // JWT auth 
@@ -91,7 +81,7 @@ if($isAuth) {
         }
 
     } else {
-        $dataResponse['message'] = 'Email inválido';
+        $dataResponse['message'] = 'Email inválido ou campo inválido';
     }
 
 
