@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Text, StyleSheet, Pressable } from 'react-native';
 
+//
+import { themeColors } from '../../helpers/Constrains';
+
 export const CustomButtons = ({
 	style,
 	title = 'BUTTON',
@@ -47,11 +50,21 @@ export const CustomButtons = ({
 				style={[
 					customStyles.text,
 					type === 'PRIMARY_EMPTY' &&
-						(buttonPressed ? { color: 'white' } : { color: '#049BFF' }),
+						(buttonPressed
+							? { color: 'white' }
+							: { color: themeColors.primaryColor.default }),
 					type === 'DANGER_EMPTY' &&
-						(buttonPressed ? { color: 'white' } : { color: '#FF234A' }),
-					type === 'PRIMARY_CLEAN' && { color: '#049BFF', fontSize: 14 },
-					type === 'DANGER_CLEAN' && { color: '#FF234A', fontSize: 14 },
+						(buttonPressed
+							? { color: 'white' }
+							: { color: themeColors.dangerColor.default }),
+					type === 'PRIMARY_CLEAN' && {
+						color: themeColors.primaryColor.default,
+						fontSize: 14,
+					},
+					type === 'DANGER_CLEAN' && {
+						color: themeColors.dangerColor.default,
+						fontSize: 14,
+					},
 				]}
 				numberOfLines={1}
 			>
@@ -95,8 +108,8 @@ export const CustomButtonLink = ({
 			<Text
 				style={[
 					customStyles.linkText,
-					type === 'PRIMARY' && { color: '#049BFF' },
-					type === 'DANGER' && { color: '#FF234A' },
+					type === 'PRIMARY' && { color: themeColors.primaryColor.default },
+					type === 'DANGER' && { color: themeColors.dangerColor.default },
 				]}
 				numberOfLines={1}
 			>
@@ -123,20 +136,20 @@ const customStyles = StyleSheet.create({
 	// primary
 	primaryDefault: {
 		elevation: 1,
-		backgroundColor: '#049BFF',
+		backgroundColor: themeColors.primaryColor.default,
 	},
 	primaryPressed: {
 		elevation: 1,
-		backgroundColor: '#0091F2',
+		backgroundColor: themeColors.primaryColor.pressed,
 	},
 	primaryEmptyDefault: {
 		elevation: 1,
 		borderWidth: 1,
-		borderColor: '#049BFF',
+		borderColor: themeColors.primaryColor.default,
 	},
 	primaryEmptyPressed: {
 		elevation: 1,
-		backgroundColor: '#049BFF',
+		backgroundColor: themeColors.primaryColor.default,
 	},
 
 	// primary link
@@ -152,20 +165,20 @@ const customStyles = StyleSheet.create({
 	// danger
 	dangerDefault: {
 		elevation: 1,
-		backgroundColor: '#FF234A',
+		backgroundColor: themeColors.dangerColor.default,
 	},
 	dangerPressed: {
 		elevation: 1,
-		backgroundColor: '#EB1D42',
+		backgroundColor: themeColors.dangerColor.pressed,
 	},
 	dangerEmptyDefault: {
 		elevation: 1,
 		borderWidth: 1,
-		borderColor: '#FF234A',
+		borderColor: themeColors.dangerColor.default,
 	},
 	dangerEmptyPressed: {
 		elevation: 1,
-		backgroundColor: '#FF234A',
+		backgroundColor: themeColors.dangerColor.pressed,
 	},
 
 	// danger link
