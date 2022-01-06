@@ -24,22 +24,9 @@ $userPasswordMd5 = md5($userPassword);
 
 // verify
 $checkers = array($userPassword, $authTimestamp, $authUserEmail);
-$validInputs = checkEmptyData($checkers, 3);
+$validInputs = checkEmptyData($checkers, 1);
 
 
-// // check input
-// if(
-// $userPassword != '' && strlen($userPassword) >= 3 && 
-// $authTimestamp != '' && strlen($authTimestamp) >= 3 &&
-// $authUserEmail != '' && strlen($authUserEmail) >= 3
-// ) {
-//     // pode passar
-//     $validInputs = true;
-
-// } else {
-//     $dataResponse['message'] = 'Campo em branco';
-//     $dataResponse['status'] = 2;
-// }
 
 // JWT auth 
 include "../connect/auth.php";

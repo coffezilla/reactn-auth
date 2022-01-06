@@ -23,29 +23,13 @@ $authUserEmail = str_replace(" ", "", $authUserEmail);
 // ========================================================
 // NEW VAR
 
-// $userEmail = addslashes(trim($_POST['email']));
-// $userEmail = str_replace(" ", "", $userEmail);
-
 // ========================================================
 // CHECKING VALIDATION
 
 // verify
 $checkers = array($authUserEmail, $currentTimestampClean);
-$validInputs = checkEmptyData($checkers, 3);
+$validInputs = checkEmptyData($checkers, 1);
 
-
-// // check input
-// if(
-// $authUserEmail != '' && strlen($authUserEmail) >= 3 &&
-// $currentTimestampClean != '' && strlen($currentTimestampClean) >= 3
-// ) {
-//     // pode passar
-//     $validInputs = true;
-
-// } else {
-//     $dataResponse['message'] = 'Campo em brancoz'.$authTimestamp;
-//     $dataResponse['status'] = 2;
-// }
 
 // ========================================================
 

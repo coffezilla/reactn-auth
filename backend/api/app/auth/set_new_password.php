@@ -28,7 +28,7 @@ $currentTimestampClean = str_replace(" ", "", $currentTimestamp);
 
 // verify
 $checkers = array($userEmail, $userNewPassword, $userNewPasswordConfirm, $userPin);
-$validInputs = checkEmptyData($checkers, 2);
+$validInputs = checkEmptyData($checkers, 1);
 
 $validPassword = false;
 

@@ -30,22 +30,8 @@ $userName = addslashes(trim($_POST['name']));
 
 // verify
 $checkers = array($authUserEmail, $currentTimestampClean, $userName);
-$validInputs = checkEmptyData($checkers, 3);
+$validInputs = checkEmptyData($checkers, 1);
 
-
-// // check input
-// if(
-// $authUserEmail != '' && strlen($authUserEmail) >= 3 &&
-// $currentTimestampClean != '' && strlen($currentTimestampClean) >= 3 &&
-// $userName != '' && strlen($userName) >= 3
-// ) {
-//     // pode passar
-//     $validInputs = true;
-
-// } else {
-//     $dataResponse['message'] = 'Campo em branco';
-//     $dataResponse['status'] = 2;
-// }
 
 // ========================================================
 
