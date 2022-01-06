@@ -1,5 +1,6 @@
 import { Text, StyleSheet, View, Alert, SafeAreaView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import Constants from 'expo-constants';
 
 import MenuDebugger from '../components/Debuggers/MenuDebugger';
 import MsDebugger, {
@@ -26,6 +27,8 @@ import { CustomButtonLink } from '../components/CustomButtons/CustomButtons';
 const Preference = ({ navigation }) => {
 	const RdxRoot = useSelector((state) => state);
 	const dispatch = useDispatch();
+	const ManifestVersion = Constants.manifest.version;
+	const ManifestName = Constants.manifest.name;
 
 	const promptLogout = () => {
 		Alert.alert(
@@ -98,7 +101,9 @@ const Preference = ({ navigation }) => {
 						/>
 					</View>
 				</View>
-				<Text style={styles.footer}>My App v1.0.0</Text>
+				<Text style={styles.footer}>
+					({ManifestName}) {ManifestVersion}
+				</Text>
 			</View>
 		</SafeAreaView>
 	);
