@@ -29,7 +29,7 @@ $userPasswordMd5 = md5($userPassword);
 $validInputs = false;
 // verify
 $checkers = array($userEmail, $authUserEmail, $userPassword);
-$validInputs = checkEmptyData($checkers, 3);
+$validInputs = checkEmptyData($checkers, 2);
 
 
 // JWT auth 

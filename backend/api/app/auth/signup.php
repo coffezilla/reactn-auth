@@ -28,7 +28,7 @@ $currentTimestampClean = str_replace(" ", "", $currentTimestamp);
 $isNewUser = false;
 // verify
 $checkers = array($userEmail, $userName, $userPassword);
-$validInputs = checkEmptyData($checkers, 3);
+$validInputs = checkEmptyData($checkers, 2);
 
 
 // JWT auth 

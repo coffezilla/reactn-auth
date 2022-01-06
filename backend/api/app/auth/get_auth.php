@@ -19,12 +19,12 @@ $currentTimestamp = Date('Y-m-d H:i:s');
 $currentTimestampClean = str_replace(" ", "", $currentTimestamp);
 
 // verify
-$checkers = array($userEmail, $userPassword, $currentTimestamp);
+$checkers = array($userEmail, $currentTimestamp);
 $validInputs = checkEmptyData($checkers, 3);
 
 // JWT auth
 include "../connect/auth.php";
-$token = createJWTAuth($userEmail);
+$token = createJWTAuth($userEmail, $currentTimestampClean, $JWTServerkey);
 
 
 if($validInputs) {

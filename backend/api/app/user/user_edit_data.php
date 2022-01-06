@@ -24,7 +24,6 @@ $authUserEmail = str_replace(" ", "", $authUserEmail);
 // NEW VAR
 
 $userName = addslashes(trim($_POST['name']));
-$userName = str_replace(" ", "", $userName);
 
 // ========================================================
 // CHECKING VALIDATION
