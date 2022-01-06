@@ -26,6 +26,7 @@ const UserEdit = ({ navigation }) => {
 	const submitEditUser = async () => {
 		await userEditData(form.name).then((responseEdit) => {
 			if (responseEdit.data.status === 1) {
+				navigation.goBack();
 				Alert.alert('Atualizado', 'Seus dados foram atualizados com sucesso.');
 			} else {
 				Alert.alert('Ops!', responseEdit.data.message);

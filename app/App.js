@@ -59,13 +59,14 @@ const Routers = ({ navigation }) => {
 	const getNewToken = async () => {
 		await getAuth()
 			.then((resAuth) => {
+				console.log('fa', resAuth);
 				if (resAuth.data.status === 1) {
 					writeItemToStorage(resAuth.data).then((response) => {
 						// set loading apenas depois de pegar um token
 						setLoading(false);
 					});
 				} else {
-					console.log('Erro auth');
+					console.log('Erro authz');
 					clearAllFromStorage();
 					dispatch(actSetLogout());
 				}
