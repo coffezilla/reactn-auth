@@ -133,7 +133,7 @@ const Login = ({ navigation }) => {
 						value={formFields[1].value}
 					/>
 
-					<Text>{JSON.stringify(formFields, null, 1)}</Text>
+					{/* <Text>{JSON.stringify(formFields, null, 1)}</Text> */}
 
 					<CustomButtons title='LOGIN' onPress={submitLogin} />
 				</View>
@@ -141,12 +141,14 @@ const Login = ({ navigation }) => {
 					<CustomButtons
 						title='CADASTRAR NOVA CONTA'
 						type='PRIMARY_CLEAN'
+						darkTheme={dark}
 						onPress={() => navigation.navigate('Signup')}
 						style={{ marginBottom: 0 }}
 					/>
 					<CustomButtons
 						title='ESQUECI MINHA SENHA'
 						type='PRIMARY_CLEAN'
+						darkTheme={dark}
 						onPress={() => navigation.navigate('StartForgotPassword')}
 						style={{ marginBottom: 0 }}
 					/>

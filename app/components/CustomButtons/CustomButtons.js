@@ -9,6 +9,7 @@ export const CustomButtons = ({
 	title = 'BUTTON',
 	onPress = null,
 	type = 'PRIMARY',
+	darkTheme = false,
 }) => {
 	// check if is pressed to tint the text inside pressable
 	const [buttonPressed, setButtonPressed] = useState(false);
@@ -28,7 +29,11 @@ export const CustomButtons = ({
 					(pressed ? customStyles.dangerPressed : customStyles.dangerDefault),
 
 				type === 'PRIMARY_CLEAN' &&
-					(pressed ? customStyles.cleanPressed : customStyles.cleanDefault),
+					(pressed
+						? darkTheme
+							? { backgroundColor: '#012646' }
+							: customStyles.cleanPressed
+						: customStyles.cleanDefault),
 
 				type === 'PRIMARY_EMPTY' &&
 					(pressed

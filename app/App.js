@@ -99,8 +99,8 @@ const Routers = ({ navigation }) => {
 	const defineLocalPreferences = async () => {
 		await readItemFromStorageSupport().then((responseStorage) => {
 			// DEBUG: clean storage
-			responseStorage = null;
-			console.log('apagou ');
+			// responseStorage = null;
+			// console.log('apagou ');
 			// *
 			let currentTheme = 'default';
 
