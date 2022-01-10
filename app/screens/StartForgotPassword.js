@@ -12,15 +12,7 @@ import { useTheme } from '@react-navigation/native';
 
 // form
 import { validateForm } from '../components/FormValidation';
-import {
-	CheckInputGroup,
-	RadioInputGroup,
-	SwitchInputGroup,
-	TextInputGroup,
-	TextInputGroupReadonly,
-	TextareaInputGroup,
-	RadioInputGroupWrapper,
-} from '../components/FormInputs';
+import { TextInputGroup } from '../components/FormInputs';
 
 // rest
 import {
@@ -35,7 +27,7 @@ import {
 } from '../helpers/handleStorage';
 
 // components
-import { FormSampleInputText } from '../components/FormSample';
+
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const StartForgotPassword = ({ navigation }) => {
@@ -93,20 +85,6 @@ const StartForgotPassword = ({ navigation }) => {
 			})
 		);
 	};
-
-	// ///////
-	const [form, setForm] = useState({
-		email: 'renato@bhxsites.com.br',
-		pin: '123',
-	});
-
-	const handleForm = (inputName, inputText) => {
-		setForm({
-			...form,
-			[inputName]: inputText,
-		});
-	};
-	// ///////
 
 	const submitConfirmPin = async () => {
 		const isValid = validationFormPin();
@@ -233,19 +211,14 @@ const StartForgotPassword = ({ navigation }) => {
 						autoCapitalize='none'
 						value={formFields[0].value}
 					/>
-					{/* 
-					<FormSampleInputText
-						inputLabel='E-mail cadastrado'
-						placeholder='Ex.: my@email.com'
-						onChangeText={(text) => handleForm('email', text)}
-						keyboardType='email-address'
-						autoCapitalize='none'
-						value={form.email}
-					/> */}
 				</View>
 
 				<CustomButtons title='CONFIRMAR' onPress={submitStartForgotPassword} />
 			</View>
+			<StatusBar
+				barStyle={dark ? 'light-content' : 'dark-content'}
+				backgroundColor={colors.card}
+			/>
 		</View>
 	);
 };

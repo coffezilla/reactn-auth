@@ -13,15 +13,7 @@ import { useTheme } from '@react-navigation/native';
 
 // form
 import { validateForm } from '../components/FormValidation';
-import {
-	CheckInputGroup,
-	RadioInputGroup,
-	SwitchInputGroup,
-	TextInputGroup,
-	TextInputGroupReadonly,
-	TextareaInputGroup,
-	RadioInputGroupWrapper,
-} from '../components/FormInputs';
+import { TextInputGroup } from '../components/FormInputs';
 
 import MenuDebugger from '../components/Debuggers/MenuDebugger';
 import MsDebugger, {
@@ -42,7 +34,6 @@ import {
 } from '../helpers/handleStorage';
 
 // components
-import { FormSampleInputText } from '../components/FormSample';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const UserDelete = () => {
@@ -91,20 +82,8 @@ const UserDelete = () => {
 		);
 	};
 
-	// const [form, setForm] = useState({
-	// 	email: 'foo@gmail.com',
-	// 	password: '123',
-	// });
-
 	// const RdxRoot = useSelector((state) => state);
 	const dispatch = useDispatch();
-
-	// const handleForm = (inputName, inputText) => {
-	// 	setForm({
-	// 		...form,
-	// 		[inputName]: inputText,
-	// 	});
-	// };
 
 	// login user
 	const submitDelete = async () => {
@@ -189,21 +168,6 @@ const UserDelete = () => {
 						handleInputForm={handleChange}
 						value={formFields[1].value}
 					/>
-					{/* <FormSampleInputText
-						inputLabel='E-mail'
-						placeholder='Ex.: my@email.com'
-						onChangeText={(text) => handleForm('email', text)}
-						keyboardType='email-address'
-						autoCapitalize='none'
-						value={form.email}
-					/>
-
-					<FormSampleInputText
-						inputLabel='Senha'
-						placeholder='******'
-						secureTextEntry={true}
-						onChangeText={(text) => handleForm('password', text)}
-						value={form.password} */}
 				</View>
 				<CustomButtons
 					title='DELETAR CONTA'
@@ -211,6 +175,10 @@ const UserDelete = () => {
 					onPress={promptDeleteAccout}
 				/>
 			</View>
+			<StatusBar
+				barStyle={dark ? 'light-content' : 'dark-content'}
+				backgroundColor={colors.card}
+			/>
 		</SafeAreaView>
 	);
 };

@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Text, StyleSheet, View, Alert, SafeAreaView } from 'react-native';
+import {
+	Text,
+	StyleSheet,
+	View,
+	Alert,
+	SafeAreaView,
+	StatusBar,
+} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '@react-navigation/native';
 import Constants from 'expo-constants';
@@ -30,8 +37,7 @@ import { HeadersText } from '../components/HeadersText/HeadersText';
 import { CustomButtonLink } from '../components/CustomButtons/CustomButtons';
 
 const Preference = ({ navigation }) => {
-	const { colors } = useTheme();
-	const RdxRoot = useSelector((state) => state);
+	const { colors, dark } = useTheme();
 	const RdxPreferences = useSelector((state) => state.preferences);
 	const dispatch = useDispatch();
 	const ManifestVersion = Constants.manifest.version;
@@ -39,7 +45,7 @@ const Preference = ({ navigation }) => {
 	const [formTheme, setFormTheme] = useState([
 		{
 			name: 'darkmode',
-			value: RdxPreferences.theme === 'dark' ? true : false,
+			value: dark,
 			error: '',
 			type: 'switcher',
 		},
@@ -112,9 +118,7 @@ const Preference = ({ navigation }) => {
 			});
 	};
 
-	useEffect(() => {
-		// console.log('bio');
-	}, []);
+	useEffect(() => {}, []);
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -165,6 +169,10 @@ const Preference = ({ navigation }) => {
 					{ManifestName} - {ManifestVersion}
 				</Text>
 			</View>
+			<StatusBar
+				barStyle={dark ? 'light-content' : 'dark-content'}
+				backgroundColor={colors.card}
+			/>
 		</SafeAreaView>
 	);
 };

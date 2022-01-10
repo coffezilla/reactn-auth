@@ -14,15 +14,7 @@ import { useTheme } from '@react-navigation/native';
 
 // form
 import { validateForm } from '../components/FormValidation';
-import {
-	CheckInputGroup,
-	RadioInputGroup,
-	SwitchInputGroup,
-	TextInputGroup,
-	TextInputGroupReadonly,
-	TextareaInputGroup,
-	RadioInputGroupWrapper,
-} from '../components/FormInputs';
+import { TextInputGroup } from '../components/FormInputs';
 
 import MenuDebugger from '../components/Debuggers/MenuDebugger';
 import MsDebugger, {
@@ -34,7 +26,6 @@ import MsDebugger, {
 import { writeItemToStorageSupport } from '../helpers/handleStorage';
 
 // components
-import { FormSampleInputText } from '../components/FormSample';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const SetNewPassword = ({ route, navigation }) => {
@@ -78,22 +69,6 @@ const SetNewPassword = ({ route, navigation }) => {
 			isEqual: 'password',
 		},
 	]);
-
-	// /////
-	// const [formPassword, setFormPassword] = useState({
-	// 	pin,
-	// 	email,
-	// 	newPassword: '',
-	// 	newPasswordConfirm: '',
-	// });
-
-	// const handleForm = (inputName, inputText) => {
-	// 	setFormPassword({
-	// 		...formPassword,
-	// 		[inputName]: inputText,
-	// 	});
-	// };
-	// /////
 
 	const validationForm = () => {
 		const inputRequired = validateForm(formFields, setFormFields);
@@ -139,13 +114,6 @@ const SetNewPassword = ({ route, navigation }) => {
 					);
 					writeItemToStorageSupport({ recovery_email: null }).then(
 						(response) => {
-							// setFormPassword({
-							// 	pin: '',
-							// 	email: '',
-							// 	newPassword: '',
-							// 	newPasswordConfirm: '',
-							// });
-
 							setFormFields([
 								{
 									name: 'pin',
@@ -214,24 +182,14 @@ const SetNewPassword = ({ route, navigation }) => {
 						handleInputForm={handleChange}
 						value={formFields[3].value}
 					/>
-
-					{/* <FormSampleInputText
-						inputLabel='Nova senha'
-						placeholder='******'
-						secureTextEntry={true}
-						onChangeText={(text) => handleForm('newPassword', text)}
-						value={formPassword.newPassword}
-					/>
-					<FormSampleInputText
-						inputLabel='Repetir senha'
-						placeholder='******'
-						secureTextEntry={true}
-						onChangeText={(text) => handleForm('newPasswordConfirm', text)}
-						value={formPassword.newPasswordConfirm}
-					/> */}
 				</View>
 				<CustomButtons title='CONFIRMAR PASSWORD' onPress={submitNewPassword} />
 			</View>
+
+			<StatusBar
+				barStyle={dark ? 'light-content' : 'dark-content'}
+				backgroundColor={colors.card}
+			/>
 		</SafeAreaView>
 	);
 };

@@ -15,18 +15,9 @@ import { useTheme } from '@react-navigation/native';
 
 // form
 import { validateForm } from '../components/FormValidation';
-import {
-	CheckInputGroup,
-	RadioInputGroup,
-	SwitchInputGroup,
-	TextInputGroup,
-	TextInputGroupReadonly,
-	TextareaInputGroup,
-	RadioInputGroupWrapper,
-} from '../components/FormInputs';
+import { TextInputGroup } from '../components/FormInputs';
 
 // components
-import { FormSampleInputText } from '../components/FormSample';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const StartChangePassword = ({ navigation }) => {
@@ -67,17 +58,6 @@ const StartChangePassword = ({ navigation }) => {
 			})
 		);
 	};
-
-	// const [form, setForm] = useState({
-	// 	currentPassword: '',
-	// });
-
-	// const handleForm = (inputName, inputText) => {
-	// 	setForm({
-	// 		...form,
-	// 		[inputName]: inputText,
-	// 	});
-	// };
 
 	const submitConfirmPassword = async () => {
 		const isValid = validationForm();
@@ -125,20 +105,16 @@ const StartChangePassword = ({ navigation }) => {
 						handleInputForm={handleChange}
 						value={formFields[0].value}
 					/>
-
-					{/* <FormSampleInputText
-						inputLabel='Senha atual'
-						placeholder='******'
-						secureTextEntry={true}
-						onChangeText={(text) => handleForm('currentPassword', text)}
-						value={form.currentPassword}
-					/> */}
 				</View>
 				<CustomButtons
 					title='CONFIRMAR SENHA'
 					onPress={submitConfirmPassword}
 				/>
 			</View>
+			<StatusBar
+				barStyle={dark ? 'light-content' : 'dark-content'}
+				backgroundColor={colors.card}
+			/>
 		</SafeAreaView>
 	);
 };

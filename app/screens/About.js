@@ -1,4 +1,11 @@
-import { Text, StyleSheet, View, ScrollView, SafeAreaView } from 'react-native';
+import {
+	Text,
+	StyleSheet,
+	View,
+	ScrollView,
+	SafeAreaView,
+	StatusBar,
+} from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import Constants from 'expo-constants';
 
@@ -12,7 +19,8 @@ const About = () => {
 	const ManifestVersion = Constants.manifest.version;
 	const ManifestName = Constants.manifest.name;
 
-	const { colors } = useTheme();
+	const { colors, dark } = useTheme();
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.innerContainer}>
@@ -23,6 +31,10 @@ const About = () => {
 					{ManifestName} - {ManifestVersion}
 				</Text>
 			</View>
+			<StatusBar
+				barStyle={dark ? 'light-content' : 'dark-content'}
+				backgroundColor={colors.card}
+			/>
 		</SafeAreaView>
 	);
 };

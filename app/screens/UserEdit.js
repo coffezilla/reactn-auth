@@ -19,20 +19,11 @@ import { useTheme } from '@react-navigation/native';
 // form
 import { validateForm } from '../components/FormValidation';
 import {
-	CheckInputGroup,
-	RadioInputGroup,
-	SwitchInputGroup,
 	TextInputGroup,
 	TextInputGroupReadonly,
-	TextareaInputGroup,
-	RadioInputGroupWrapper,
 } from '../components/FormInputs';
 
 // components
-import {
-	FormSampleInputText,
-	FormSampleInputReadOnly,
-} from '../components/FormSample';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 import { userEditData, getUserData } from '../Api/userHandle';
@@ -57,11 +48,6 @@ const UserEdit = ({ navigation }) => {
 			isRequired: true,
 		},
 	]);
-
-	// const [form, setForm] = useState({
-	// 	name: '',
-	// 	email: '',
-	// });
 
 	const validationForm = () => {
 		const inputRequired = validateForm(formFields, setFormFields);
@@ -161,19 +147,14 @@ const UserEdit = ({ navigation }) => {
 						keyboardType='default'
 						value={formFields[1].value}
 					/>
-
-					{/* <FormSampleInputReadOnly inputLabel='E-mail' value={form.email} />
-
-					<FormSampleInputText
-						inputLabel='Nome'
-						placeholder='Ex.: John Wayne'
-						onChangeText={(text) => handleForm('name', text)}
-						value={form.name}
-					/> */}
 				</View>
 
 				<CustomButtons title='CONFIRMAR EDIÇÃO' onPress={submitEditUser} />
 			</View>
+			<StatusBar
+				barStyle={dark ? 'light-content' : 'dark-content'}
+				backgroundColor={colors.card}
+			/>
 		</SafeAreaView>
 	);
 };

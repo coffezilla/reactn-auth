@@ -13,15 +13,7 @@ import { useTheme } from '@react-navigation/native';
 
 // form
 import { validateForm } from '../components/FormValidation';
-import {
-	CheckInputGroup,
-	RadioInputGroup,
-	SwitchInputGroup,
-	TextInputGroup,
-	TextInputGroupReadonly,
-	TextareaInputGroup,
-	RadioInputGroupWrapper,
-} from '../components/FormInputs';
+import { TextInputGroup } from '../components/FormInputs';
 
 // rest
 import { submitLoginUser } from '../Api/authHandle';
@@ -31,7 +23,6 @@ import { actSetLogin, actSetLogout } from '../redux/ducks/User';
 import { writeItemToStorage } from '../helpers/handleStorage';
 
 // components
-// import { FormSampleInputText } from '../components/FormSample';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const Login = ({ navigation }) => {
@@ -132,8 +123,6 @@ const Login = ({ navigation }) => {
 						handleInputForm={handleChange}
 						value={formFields[1].value}
 					/>
-
-					{/* <Text>{JSON.stringify(formFields, null, 1)}</Text> */}
 
 					<CustomButtons title='LOGIN' onPress={submitLogin} />
 				</View>

@@ -69,8 +69,6 @@ const Routers = ({ navigation }) => {
 	const RdxStatus = useSelector((state) => state.loginStatus);
 	const { colors } = useTheme();
 
-	// const RdxPreferences = useSelector((state) => state.preferences);
-
 	// get auth to make simple calls
 	const getNewToken = async () => {
 		await getAuth()
@@ -80,7 +78,6 @@ const Routers = ({ navigation }) => {
 					writeItemToStorage(resAuth.data).then((response) => {
 						// set loading apenas depois de pegar um token
 						defineLocalPreferences();
-						// setLoading(false);
 					});
 				} else {
 					console.log('Erro authz');
@@ -123,7 +120,6 @@ const Routers = ({ navigation }) => {
 	// checking local storage for some token authentication or email login
 	const getCurrentStorage = async () => {
 		await readItemFromStorage().then((responseStorage) => {
-			// console.log('qual a boa');
 			if (responseStorage === null) {
 				// if has nothing it means:
 				// not auth to make any requests
@@ -155,7 +151,6 @@ const Routers = ({ navigation }) => {
 								);
 							}
 							defineLocalPreferences();
-							// setLoading(false);
 						} else {
 							// not authenticated
 							getNewToken();
@@ -212,7 +207,6 @@ const Routers = ({ navigation }) => {
 						component={Hub}
 						options={{
 							...TransitionPresets.SlideFromRightIOS,
-							// headerTintColor: 'rgb(28, 28, 30)',
 							headerTintColor: colors.text,
 							headerStyle: {
 								elevation: 0,
@@ -369,7 +363,6 @@ const Routers = ({ navigation }) => {
 							</TouchableOpacity>
 						);
 					},
-					// ...headerTitleStyleCustom,
 				}}
 			/>
 			<Stack.Screen
@@ -384,24 +377,6 @@ const Routers = ({ navigation }) => {
 		</Stack.Navigator>
 	);
 };
-
-// export default function App() {
-// 	return (
-// 		<Provider store={store}>
-// 			<NavigationContainer>
-// 				<Stack.Navigator>
-// 					<Stack.Screen
-// 						name='Routers'
-// 						component={Routers}
-// 						options={{
-// 							headerShown: false,
-// 						}}
-// 					/>
-// 				</Stack.Navigator>
-// 			</NavigationContainer>
-// 		</Provider>
-// 	);
-// }
 
 // wrapper container
 const NavigationContainerWrapper = () => {

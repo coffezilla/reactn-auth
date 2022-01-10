@@ -14,15 +14,7 @@ import { useTheme } from '@react-navigation/native';
 
 // form
 import { validateForm } from '../components/FormValidation';
-import {
-	CheckInputGroup,
-	RadioInputGroup,
-	SwitchInputGroup,
-	TextInputGroup,
-	TextInputGroupReadonly,
-	TextareaInputGroup,
-	RadioInputGroupWrapper,
-} from '../components/FormInputs';
+import { TextInputGroup } from '../components/FormInputs';
 
 // redux
 import { actSetLogin, actSetLogout } from '../redux/ducks/User';
@@ -32,7 +24,6 @@ import { getAuth, submitSignupUser } from '../Api/authHandle';
 import { writeItemToStorage } from '../helpers/handleStorage';
 
 // components
-import { FormSampleInputText } from '../components/FormSample';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const Signup = () => {
@@ -70,20 +61,6 @@ const Signup = () => {
 			isEqual: 'password',
 		},
 	]);
-
-	// const RdxRoot = useSelector((state) => state);
-	// const [form, setForm] = useState({
-	// 	name: 'foo',
-	// 	email: 'foo@gmail.com',
-	// 	password: '123',
-	// });
-
-	// const handleForm = (inputName, inputText) => {
-	// 	setForm({
-	// 		...form,
-	// 		[inputName]: inputText,
-	// 	});
-	// };
 
 	const validationForm = () => {
 		const inputRequired = validateForm(formFields, setFormFields);
@@ -149,28 +126,6 @@ const Signup = () => {
 		<ScrollView style={styles.container}>
 			<SafeAreaView>
 				<View style={styles.innerContainer}>
-					{/* <FormSampleInputText
-						inputLabel='Nome'
-						placeholder='Ex.: John Wayne'
-						onChangeText={(text) => handleForm('name', text)}
-						value={form.name}
-					/>
-					<FormSampleInputText
-						inputLabel='E-mail'
-						placeholder='Ex.: my@email.com'
-						autoCapitalize='none'
-						onChangeText={(text) => handleForm('email', text)}
-						keyboardType='email-address'
-						value={form.email}
-					/>
-					<FormSampleInputText
-						inputLabel='Senha'
-						secureTextEntry={true}
-						placeholder='******'
-						onChangeText={(text) => handleForm('password', text)}
-						value={form.password}
-					/> */}
-
 					<TextInputGroup
 						label='Name'
 						placeholder='Ex.: Carl John'
@@ -218,6 +173,11 @@ const Signup = () => {
 
 					<CustomButtons title='CADASTRAR' onPress={submitSignup} />
 				</View>
+
+				<StatusBar
+					barStyle={dark ? 'light-content' : 'dark-content'}
+					backgroundColor={colors.card}
+				/>
 			</SafeAreaView>
 		</ScrollView>
 	);
