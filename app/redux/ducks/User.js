@@ -1,6 +1,7 @@
 // constrain
 const SET_LOGIN = 'SET_LOGIN';
 const SET_LOGOUT = 'SET_LOGOUT';
+const SET_LOCAL_PREFERENCES = 'SET_LOCAL_PREFERENCES';
 
 // action
 export const actSetLogin = () => {
@@ -15,14 +16,32 @@ export const actSetLogout = () => {
 	};
 };
 
+// set local preferences
+export const setLocalPreferences = (userPrefs) => {
+	return {
+		type: SET_LOCAL_PREFERENCES,
+		payload: {
+			prefs: userPrefs,
+		},
+	};
+};
+
 // reducers
 const INITIAL_VALUE = {
 	loginStatus: 'NOT_LOGGED',
 	emailUserRecovery: null,
+	preferences: {
+		theme: 'default',
+	},
 };
 
 const User = (state = INITIAL_VALUE, action) => {
 	switch (action.type) {
+		case SET_LOCAL_PREFERENCES:
+			return {
+				...state,
+				preferences: action.payload.prefs,
+			};
 		case SET_LOGIN:
 			return {
 				...state,

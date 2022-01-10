@@ -15,6 +15,7 @@ import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const Login = ({ navigation }) => {
 	const dispatch = useDispatch();
+	const darkMode = false;
 	const [form, setForm] = useState({
 		email: 'foo@gmail.com',
 		password: '123',
@@ -41,9 +42,23 @@ const Login = ({ navigation }) => {
 		});
 	};
 
+	// style
+	const themeStyles = StyleSheet.create({
+		container: {
+			backgroundColor: darkMode ? 'black' : 'yellow',
+			flex: 1,
+		},
+		innerContainer: {
+			marginVertical: 17,
+			marginHorizontal: 17,
+			justifyContent: 'space-between',
+			flex: 1,
+		},
+	});
+
 	return (
-		<SafeAreaView style={styles.container}>
-			<View style={styles.innerContainer}>
+		<SafeAreaView style={themeStyles.container}>
+			<View style={themeStyles.innerContainer}>
 				<View
 					style={{
 						flex: 1,
@@ -87,16 +102,3 @@ const Login = ({ navigation }) => {
 };
 
 export default Login;
-
-const styles = StyleSheet.create({
-	container: {
-		backgroundColor: '#fff',
-		flex: 1,
-	},
-	innerContainer: {
-		marginVertical: 17,
-		marginHorizontal: 17,
-		justifyContent: 'space-between',
-		flex: 1,
-	},
-});

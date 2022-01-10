@@ -1,6 +1,9 @@
+import { useEffect, useState } from 'react';
 import { Text, StyleSheet, View, Alert, SafeAreaView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import Constants from 'expo-constants';
+
+import { SwitchInputGroup } from '../components/FormInputs';
 
 import MenuDebugger from '../components/Debuggers/MenuDebugger';
 import MsDebugger, {
@@ -9,7 +12,7 @@ import MsDebugger, {
 } from '../components/Debuggers/MsDebugger';
 
 // redux
-import { actSetLogout } from '../redux/ducks/User';
+import { actSetLogout, setLocalPreferences } from '../redux/ducks/User';
 
 // rest
 import { getAuth, submitLogoutUser } from '../Api/authHandle';
@@ -18,6 +21,7 @@ import { getAuth, submitLogoutUser } from '../Api/authHandle';
 import {
 	writeItemToStorage,
 	clearAllFromStorage,
+	writeItemToStorageSupport,
 } from '../helpers/handleStorage';
 
 // components
@@ -26,9 +30,46 @@ import { CustomButtonLink } from '../components/CustomButtons/CustomButtons';
 
 const Preference = ({ navigation }) => {
 	const RdxRoot = useSelector((state) => state);
+	const RdxPreferences = useSelector((state) => state.preferences);
 	const dispatch = useDispatch();
 	const ManifestVersion = Constants.manifest.version;
 	const ManifestName = Constants.manifest.name;
+	const [formTheme, setFormTheme] = useState([
+		{
+			name: 'darkmode',
+			value: RdxPreferences.theme === 'dark' ? true : false,
+			error: '',
+			type: 'switcher',
+		},
+	]);
+
+	const handleDarkMode = (value, name, params = {}, switcher = false) => {
+		if (switcher) {
+			value = !value;
+		}
+
+		setFormTheme(
+			formTheme.map((field) => {
+				if (field.name === name) {
+					return {
+						...field,
+						value: value,
+						error: '',
+					};
+				}
+				return { ...field };
+			})
+		);
+
+		const currentLocalPreferences = {
+			...RdxPreferences,
+			theme: value ? 'dark' : 'default',
+		};
+
+		writeItemToStorageSupport(currentLocalPreferences).then((response) => {
+			dispatch(setLocalPreferences(currentLocalPreferences));
+		});
+	};
 
 	const promptLogout = () => {
 		Alert.alert(
@@ -69,6 +110,10 @@ const Preference = ({ navigation }) => {
 			});
 	};
 
+	useEffect(() => {
+		// console.log('bio');
+	}, []);
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.innerContainer}>
@@ -92,6 +137,20 @@ const Preference = ({ navigation }) => {
 						/>
 						<CustomButtonLink title='Sair da sessão' onPress={promptLogout} />
 					</View>
+
+					<View style={styles.section}>
+						<HeadersText title='Modo escuro' />
+						<SwitchInputGroup
+							value={formTheme[0].value}
+							label='Switch'
+							labelHeader='Are you older than 18?'
+							name={formTheme[0].name}
+							error={formTheme[0].error}
+							darkTheme={formTheme[0].value}
+							handleInputForm={handleDarkMode}
+						/>
+					</View>
+
 					<View style={styles.section}>
 						<HeadersText title='Avançado' />
 						<CustomButtonLink
