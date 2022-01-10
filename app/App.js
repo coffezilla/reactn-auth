@@ -292,6 +292,7 @@ const Routers = ({ navigation }) => {
 						component={Login}
 						options={{
 							cardStyleInterpolator: forFade,
+							// headerTransparent: true,
 							headerStyle: {
 								elevation: 0,
 								shadowOpacity: 0,
