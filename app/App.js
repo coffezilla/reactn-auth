@@ -22,6 +22,7 @@ import {
 	NavigationContainer,
 	DefaultTheme,
 	DarkTheme,
+	useTheme,
 } from '@react-navigation/native';
 
 // stack
@@ -66,6 +67,8 @@ const Routers = ({ navigation }) => {
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(true);
 	const RdxStatus = useSelector((state) => state.loginStatus);
+	const { colors } = useTheme();
+
 	// const RdxPreferences = useSelector((state) => state.preferences);
 
 	// get auth to make simple calls
@@ -96,7 +99,8 @@ const Routers = ({ navigation }) => {
 	const defineLocalPreferences = async () => {
 		await readItemFromStorageSupport().then((responseStorage) => {
 			// DEBUG: clean storage
-			// responseStorage = null;
+			responseStorage = null;
+			console.log('apagou ');
 			// *
 			let currentTheme = 'default';
 
@@ -208,6 +212,8 @@ const Routers = ({ navigation }) => {
 						component={Hub}
 						options={{
 							...TransitionPresets.SlideFromRightIOS,
+							// headerTintColor: 'rgb(28, 28, 30)',
+							headerTintColor: colors.text,
 							headerStyle: {
 								elevation: 0,
 								shadowOpacity: 0,
@@ -221,7 +227,10 @@ const Routers = ({ navigation }) => {
 										<Ionicons
 											name='settings-outline'
 											type='Ionicons'
-											style={[styles.headerIconStyle, { fontSize: 22 }]}
+											style={[
+												styles.headerIconStyle,
+												{ fontSize: 22, color: colors.text },
+											]}
 										/>
 									</TouchableOpacity>
 								);
@@ -262,7 +271,10 @@ const Routers = ({ navigation }) => {
 										<Ionicons
 											name='information-circle-outline'
 											type='Ionicons'
-											style={styles.headerIconStyle}
+											style={[
+												styles.headerIconStyle,
+												{ fontSize: 24, color: colors.text },
+											]}
 										/>
 									</TouchableOpacity>
 								);
@@ -299,7 +311,10 @@ const Routers = ({ navigation }) => {
 										<Ionicons
 											name='information-circle-outline'
 											type='Ionicons'
-											style={styles.headerIconStyle}
+											style={
+												(styles.headerIconStyle,
+												{ fontSize: 24, color: colors.text })
+											}
 										/>
 									</TouchableOpacity>
 								);
@@ -346,7 +361,10 @@ const Routers = ({ navigation }) => {
 								<Ionicons
 									name='chevron-down-outline'
 									type='Ionicons'
-									style={styles.headerIconStyle}
+									style={
+										(styles.headerIconStyle,
+										{ fontSize: 24, color: colors.text })
+									}
 								/>
 							</TouchableOpacity>
 						);
@@ -389,9 +407,29 @@ const Routers = ({ navigation }) => {
 const NavigationContainerWrapper = () => {
 	const RdxPreferences = useSelector((state) => state.preferences);
 
+	const MyDarkTheme = {
+		...DarkTheme,
+		colors: {
+			...DarkTheme.colors,
+			background: '#18191a',
+		},
+	};
+
+	const MyDefaultTheme = {
+		...DefaultTheme,
+		colors: {
+			primary: 'rgb(255, 45, 85)',
+			background: 'white',
+			card: 'rgb(255, 255, 255)',
+			text: 'rgb(28, 28, 30)',
+			border: 'rgb(199, 199, 204)',
+			notification: 'rgb(255, 69, 58)',
+		},
+	};
+
 	return (
 		<NavigationContainer
-			theme={RdxPreferences.theme === 'dark' ? DarkTheme : DefaultTheme}
+			theme={RdxPreferences.theme === 'dark' ? MyDarkTheme : MyDefaultTheme}
 		>
 			<Stack.Navigator>
 				<Stack.Screen

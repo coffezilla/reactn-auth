@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Text, StyleSheet, View, Alert, SafeAreaView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTheme } from '@react-navigation/native';
 import Constants from 'expo-constants';
 
 import { SwitchInputGroup } from '../components/FormInputs';
@@ -29,6 +30,7 @@ import { HeadersText } from '../components/HeadersText/HeadersText';
 import { CustomButtonLink } from '../components/CustomButtons/CustomButtons';
 
 const Preference = ({ navigation }) => {
+	const { colors } = useTheme();
 	const RdxRoot = useSelector((state) => state);
 	const RdxPreferences = useSelector((state) => state.preferences);
 	const dispatch = useDispatch();
@@ -123,14 +125,14 @@ const Preference = ({ navigation }) => {
 					}}
 				>
 					<View style={styles.section}>
-						<HeadersText title='Geral' />
+						<HeadersText title='Geral' size='H3' />
 						<CustomButtonLink
 							title='Editar dados pessoais'
 							onPress={() => navigation.navigate('UserEdit')}
 						/>
 					</View>
 					<View style={styles.section}>
-						<HeadersText title='Acessos' />
+						<HeadersText title='Acessos' size='H3' />
 						<CustomButtonLink
 							title='Alterar senha'
 							onPress={() => navigation.navigate('StartChangePassword')}
@@ -139,11 +141,10 @@ const Preference = ({ navigation }) => {
 					</View>
 
 					<View style={styles.section}>
-						<HeadersText title='Modo escuro' />
+						<HeadersText title='Usabilidade' size='H3' />
 						<SwitchInputGroup
 							value={formTheme[0].value}
-							label='Switch'
-							labelHeader='Are you older than 18?'
+							label='Modo escuro'
 							name={formTheme[0].name}
 							error={formTheme[0].error}
 							darkTheme={formTheme[0].value}
@@ -152,7 +153,7 @@ const Preference = ({ navigation }) => {
 					</View>
 
 					<View style={styles.section}>
-						<HeadersText title='Avançado' />
+						<HeadersText title='Avançado' size='H3' />
 						<CustomButtonLink
 							title='Deletar conta'
 							type='DANGER'
@@ -160,8 +161,8 @@ const Preference = ({ navigation }) => {
 						/>
 					</View>
 				</View>
-				<Text style={styles.footer}>
-					({ManifestName}) {ManifestVersion}
+				<Text style={[styles.footer, { color: colors.text }]}>
+					{ManifestName} - {ManifestVersion}
 				</Text>
 			</View>
 		</SafeAreaView>
@@ -172,7 +173,6 @@ export default Preference;
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#fff',
 		flex: 1,
 	},
 	innerContainer: {
@@ -187,6 +187,5 @@ const styles = StyleSheet.create({
 	footer: {
 		textAlign: 'center',
 		fontSize: 14,
-		color: 'gray',
 	},
 });

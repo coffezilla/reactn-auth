@@ -1,6 +1,27 @@
 import { useState } from 'react';
-import { StyleSheet, View, Alert, SafeAreaView } from 'react-native';
+import {
+	StyleSheet,
+	View,
+	Alert,
+	SafeAreaView,
+	StatusBar,
+	Text,
+} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+
+import { useTheme } from '@react-navigation/native';
+
+// form
+import { validateForm } from '../components/FormValidation';
+import {
+	CheckInputGroup,
+	RadioInputGroup,
+	SwitchInputGroup,
+	TextInputGroup,
+	TextInputGroupReadonly,
+	TextareaInputGroup,
+	RadioInputGroupWrapper,
+} from '../components/FormInputs';
 
 import MenuDebugger from '../components/Debuggers/MenuDebugger';
 import MsDebugger, {
@@ -25,63 +46,117 @@ import { FormSampleInputText } from '../components/FormSample';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const UserDelete = () => {
-	const [form, setForm] = useState({
-		email: 'foo@gmail.com',
-		password: '123',
-	});
+	const { colors, dark } = useTheme();
 
-	const RdxRoot = useSelector((state) => state);
+	const [formFields, setFormFields] = useState([
+		{
+			name: 'email',
+			value: '',
+			error: '',
+			type: 'email',
+			isRequired: true,
+		},
+		{
+			name: 'password',
+			value: '',
+			error: '',
+			type: 'password',
+			isRequired: true,
+		},
+	]);
+
+	const validationForm = () => {
+		const inputRequired = validateForm(formFields, setFormFields);
+		const hasNoErrors = inputRequired.hasPassed;
+
+		return hasNoErrors;
+	};
+
+	const handleChange = (value, name, params = {}, switcher = false) => {
+		if (switcher) {
+			value = !value;
+		}
+
+		setFormFields(
+			formFields.map((field) => {
+				if (field.name === name) {
+					return {
+						...field,
+						value: value,
+						error: '',
+					};
+				}
+				return { ...field };
+			})
+		);
+	};
+
+	// const [form, setForm] = useState({
+	// 	email: 'foo@gmail.com',
+	// 	password: '123',
+	// });
+
+	// const RdxRoot = useSelector((state) => state);
 	const dispatch = useDispatch();
 
-	const handleForm = (inputName, inputText) => {
-		setForm({
-			...form,
-			[inputName]: inputText,
-		});
-	};
+	// const handleForm = (inputName, inputText) => {
+	// 	setForm({
+	// 		...form,
+	// 		[inputName]: inputText,
+	// 	});
+	// };
 
 	// login user
 	const submitDelete = async () => {
-		await submitDeleteUser(form.email, form.password).then((responseDelete) => {
-			if (responseDelete.data.status === 1) {
-				Alert.alert(
-					'Conta deletada',
-					'Sua conta foi deletada com sucesso. Não é possível recuperá-la novamente.'
-				);
+		const isValid = validationForm();
 
-				dispatch(actSetLogout());
-				clearAllFromStorage();
-				getAuth()
-					.then((resAuth) => {
-						if (resAuth.data.status === 1) {
-							writeItemToStorage(resAuth.data).then((response) => {
-								// set loading apenas depois de pegar um token
+		if (isValid) {
+			await submitDeleteUser(formFields[0].value, formFields[1].value).then(
+				(responseDelete) => {
+					if (responseDelete.data.status === 1) {
+						Alert.alert(
+							'Conta deletada',
+							'Sua conta foi deletada com sucesso. Não é possível recuperá-la novamente.'
+						);
+
+						dispatch(actSetLogout());
+						clearAllFromStorage();
+						getAuth()
+							.then((resAuth) => {
+								if (resAuth.data.status === 1) {
+									writeItemToStorage(resAuth.data).then((response) => {
+										// set loading apenas depois de pegar um token
+									});
+								} else {
+									console.log('Erro auth');
+								}
+							})
+							.catch((error) => {
+								console.log('Erro auth, try again');
 							});
-						} else {
-							console.log('Erro auth');
-						}
-					})
-					.catch((error) => {
-						console.log('Erro auth, try again');
-					});
-			} else {
-				Alert.alert('Ops!', responseDelete.data.message);
-			}
-		});
+					} else {
+						Alert.alert('Ops!', responseDelete.data.message);
+					}
+				}
+			);
+		}
 	};
 
 	const promptDeleteAccout = () => {
-		Alert.alert(
-			'Deletar conta?',
-			'Pressione OK para confirmar a exclusão definitiva desta conta. Esta operação não pode ser desfeita.',
-			[
-				{
-					text: 'Cancelar',
-					style: 'cancel',
-				},
-				{ text: 'OK', onPress: submitDelete },
-			]
-		);
+		const isValid = validationForm();
+		if (isValid) {
+			Alert.alert(
+				'Deletar conta?',
+				'Pressione OK para confirmar a exclusão definitiva desta conta. Esta operação não pode ser desfeita.',
+				[
+					{
+						text: 'Cancelar',
+						style: 'cancel',
+					},
+					{ text: 'OK', onPress: submitDelete },
+				]
+			);
+		}
 	};
 
 	return (
@@ -93,7 +168,28 @@ const UserDelete = () => {
 						justifyContent: 'center',
 					}}
 				>
-					<FormSampleInputText
+					<TextInputGroup
+						label='E-mail'
+						placeholder='Ex.: my@email.com'
+						name={formFields[0].name}
+						error={formFields[0].error}
+						darkTheme={dark ? true : false}
+						handleInputForm={handleChange}
+						keyboardType='email-address'
+						autoCapitalize='none'
+						value={formFields[0].value}
+					/>
+					<TextInputGroup
+						label='Password'
+						name={formFields[1].name}
+						error={formFields[1].error}
+						darkTheme={dark ? true : false}
+						placeholder='******'
+						secureTextEntry={true}
+						handleInputForm={handleChange}
+						value={formFields[1].value}
+					/>
+					{/* <FormSampleInputText
 						inputLabel='E-mail'
 						placeholder='Ex.: my@email.com'
 						onChangeText={(text) => handleForm('email', text)}
@@ -107,8 +203,7 @@ const UserDelete = () => {
 						placeholder='******'
 						secureTextEntry={true}
 						onChangeText={(text) => handleForm('password', text)}
-						value={form.password}
-					/>
+						value={form.password} */}
 				</View>
 				<CustomButtons
 					title='DELETAR CONTA'
@@ -124,7 +219,6 @@ export default UserDelete;
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#fff',
 		flex: 1,
 	},
 	innerContainer: {

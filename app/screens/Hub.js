@@ -1,5 +1,13 @@
-import { Text, StyleSheet, View, ScrollView, SafeAreaView } from 'react-native';
+import {
+	Text,
+	StyleSheet,
+	View,
+	ScrollView,
+	SafeAreaView,
+	StatusBar,
+} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTheme } from '@react-navigation/native';
 
 import MenuDebugger from '../components/Debuggers/MenuDebugger';
 import MsDebugger, {
@@ -9,14 +17,19 @@ import MsDebugger, {
 
 const Hub = () => {
 	const RdxRoot = useSelector((state) => state);
+	const { colors, dark } = useTheme();
 
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.innerContainer}>
 				<View>
-					<Text>HUB...</Text>
+					<Text style={{ color: colors.text }}>HUB...</Text>
 				</View>
 			</View>
+			<StatusBar
+				barStyle={dark ? 'light-content' : 'dark-content'}
+				backgroundColor={colors.card}
+			/>
 		</SafeAreaView>
 	);
 };
@@ -25,7 +38,6 @@ export default Hub;
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#fff',
 		flex: 1,
 	},
 	innerContainer: {

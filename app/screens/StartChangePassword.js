@@ -1,39 +1,109 @@
 import { useEffect, useState } from 'react';
-import { View, StyleSheet, Alert, SafeAreaView } from 'react-native';
+import {
+	View,
+	StyleSheet,
+	Alert,
+	SafeAreaView,
+	StatusBar,
+	Text,
+} from 'react-native';
 
 // rest
 import { checkCurrentPassword } from '../Api/authHandle';
+
+import { useTheme } from '@react-navigation/native';
+
+// form
+import { validateForm } from '../components/FormValidation';
+import {
+	CheckInputGroup,
+	RadioInputGroup,
+	SwitchInputGroup,
+	TextInputGroup,
+	TextInputGroupReadonly,
+	TextareaInputGroup,
+	RadioInputGroupWrapper,
+} from '../components/FormInputs';
 
 // components
 import { FormSampleInputText } from '../components/FormSample';
 import { CustomButtons } from '../components/CustomButtons/CustomButtons';
 
 const StartChangePassword = ({ navigation }) => {
-	const [form, setForm] = useState({
-		currentPassword: '',
-	});
+	const { colors, dark } = useTheme();
 
-	const handleForm = (inputName, inputText) => {
-		setForm({
-			...form,
-			[inputName]: inputText,
-		});
+	const [formFields, setFormFields] = useState([
+		{
+			name: 'password',
+			value: '',
+			error: '',
+			type: 'password',
+			isRequired: true,
+		},
+	]);
+
+	const validationForm = () => {
+		const inputRequired = validateForm(formFields, setFormFields);
+		const hasNoErrors = inputRequired.hasPassed;
+
+		return hasNoErrors;
 	};
 
-	const submitConfirmPassword = async () => {
-		await checkCurrentPassword(form.currentPassword).then(
-			(responseCurrentPassword) => {
-				if (responseCurrentPassword.data.status === 1) {
-					navigation.push('SetNewPassword', {
-						pin: responseCurrentPassword.data.pin,
-						email: responseCurrentPassword.data.email,
-						userStatus: 'LOGGED',
-					});
-				} else {
-					Alert.alert('Ops!', responseCurrentPassword.data.message);
+	const handleChange = (value, name, params = {}, switcher = false) => {
+		if (switcher) {
+			value = !value;
+		}
+
+		setFormFields(
+			formFields.map((field) => {
+				if (field.name === name) {
+					return {
+						...field,
+						value: value,
+						error: '',
+					};
 				}
-			}
+				return { ...field };
+			})
 		);
+	};
+
+	// const [form, setForm] = useState({
+	// 	currentPassword: '',
+	// });
+
+	// const handleForm = (inputName, inputText) => {
+	// 	setForm({
+	// 		...form,
+	// 		[inputName]: inputText,
+	// 	});
+	// };
+
+	const submitConfirmPassword = async () => {
+		const isValid = validationForm();
+
+		if (isValid) {
+			await checkCurrentPassword(formFields[0].value).then(
+				(responseCurrentPassword) => {
+					if (responseCurrentPassword.data.status === 1) {
+						setFormFields([
+							{
+								name: 'password',
+								value: '',
+							},
+						]);
+
+						navigation.push('SetNewPassword', {
+							pin: responseCurrentPassword.data.pin,
+							email: responseCurrentPassword.data.email,
+							userStatus: 'LOGGED',
+						});
+					} else {
+						Alert.alert('Ops!', responseCurrentPassword.data.message);
+					}
+				}
+			);
+		}
 	};
 
 	return (
@@ -45,13 +115,24 @@ const StartChangePassword = ({ navigation }) => {
 						justifyContent: 'center',
 					}}
 				>
-					<FormSampleInputText
+					<TextInputGroup
+						label='Password'
+						name={formFields[0].name}
+						error={formFields[0].error}
+						darkTheme={dark ? true : false}
+						placeholder='******'
+						secureTextEntry={true}
+						handleInputForm={handleChange}
+						value={formFields[0].value}
+					/>
+
+					{/* <FormSampleInputText
 						inputLabel='Senha atual'
 						placeholder='******'
 						secureTextEntry={true}
 						onChangeText={(text) => handleForm('currentPassword', text)}
 						value={form.currentPassword}
-					/>
+					/> */}
 				</View>
 				<CustomButtons
 					title='CONFIRMAR SENHA'
@@ -66,7 +147,6 @@ export default StartChangePassword;
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#fff',
 		flex: 1,
 	},
 	innerContainer: {

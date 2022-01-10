@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTheme } from '@react-navigation/native';
 import {
 	Text,
 	StyleSheet,
@@ -10,6 +11,7 @@ import {
 } from 'react-native';
 
 export const HeadersText = ({ style, title = 'Title', size = 'H2' }) => {
+	const { colors } = useTheme();
 	let titleSize = 10;
 	if (size === 'H1') {
 		titleSize = 22;
@@ -29,6 +31,7 @@ export const HeadersText = ({ style, title = 'Title', size = 'H2' }) => {
 			style={[
 				{
 					fontSize: titleSize,
+					color: colors.text,
 				},
 				customStyles.text,
 			]}
@@ -40,7 +43,7 @@ export const HeadersText = ({ style, title = 'Title', size = 'H2' }) => {
 
 const customStyles = StyleSheet.create({
 	text: {
-		fontWeight: 'bold',
+		// fontWeight: 'bold',
 		marginBottom: 5,
 	},
 });

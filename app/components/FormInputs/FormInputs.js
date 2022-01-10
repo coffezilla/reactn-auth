@@ -258,23 +258,27 @@ export const SwitchInputGroup = ({
 }) => {
 	return (
 		<>
-			<Text
-				style={[
-					formStyles.labelTop,
-					{
-						color: darkTheme
-							? formStylesColors.dark.text
-							: formStylesColors.default.text,
-					},
-				]}
-			>
-				<>
-					{labelHeader}{' '}
-					{error && (
-						<Text style={{ color: 'red', fontWeight: 'normal' }}>{error}</Text>
-					)}
-				</>
-			</Text>
+			{labelHeader && (
+				<Text
+					style={[
+						formStyles.labelTop,
+						{
+							color: darkTheme
+								? formStylesColors.dark.text
+								: formStylesColors.default.text,
+						},
+					]}
+				>
+					<>
+						{labelHeader}{' '}
+						{error && (
+							<Text style={{ color: 'red', fontWeight: 'normal' }}>
+								{error}
+							</Text>
+						)}
+					</>
+				</Text>
+			)}
 
 			<View
 				style={[

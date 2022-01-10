@@ -155,11 +155,11 @@ const customStyles = StyleSheet.create({
 	// primary link
 	primaryLinkDefault: {
 		// elevation: 1,
-		backgroundColor: 'white',
+		// backgroundColor: 'white',
 	},
 	primaryLinkPressed: {
 		// elevation: 1,
-		backgroundColor: '#F5F3F3',
+		// backgroundColor: '#F5F3F3',
 	},
 
 	// danger
@@ -184,11 +184,11 @@ const customStyles = StyleSheet.create({
 	// danger link
 	dangerLinkDefault: {
 		// elevation: 1,
-		backgroundColor: 'white',
+		// backgroundColor: 'white',
 	},
 	dangerLinkPressed: {
 		// elevation: 1,
-		backgroundColor: '#F5F3F3',
+		// backgroundColor: '#F5F3F3',
 	},
 
 	// clean

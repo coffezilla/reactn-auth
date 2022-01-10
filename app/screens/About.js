@@ -1,4 +1,6 @@
 import { Text, StyleSheet, View, ScrollView, SafeAreaView } from 'react-native';
+import { useTheme } from '@react-navigation/native';
+import Constants from 'expo-constants';
 
 import MenuDebugger from '../components/Debuggers/MenuDebugger';
 import MsDebugger, {
@@ -7,12 +9,19 @@ import MsDebugger, {
 } from '../components/Debuggers/MsDebugger';
 
 const About = () => {
+	const ManifestVersion = Constants.manifest.version;
+	const ManifestName = Constants.manifest.name;
+
+	const { colors } = useTheme();
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.innerContainer}>
 				<View>
-					<Text>ABOUT...</Text>
+					<Text style={{ color: colors.text }}>ABOUT...</Text>
 				</View>
+				<Text style={[styles.footer, { color: colors.text }]}>
+					{ManifestName} - {ManifestVersion}
+				</Text>
 			</View>
 		</SafeAreaView>
 	);
@@ -22,7 +31,6 @@ export default About;
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#fff',
 		flex: 1,
 	},
 	innerContainer: {
@@ -30,5 +38,9 @@ const styles = StyleSheet.create({
 		marginHorizontal: 17,
 		justifyContent: 'space-between',
 		flex: 1,
+	},
+	footer: {
+		textAlign: 'center',
+		fontSize: 14,
 	},
 });
