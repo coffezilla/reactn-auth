@@ -387,6 +387,7 @@ const NavigationContainerWrapper = () => {
 		colors: {
 			...DarkTheme.colors,
 			background: '#18191a',
+			card: '#262626',
 		},
 	};
 
