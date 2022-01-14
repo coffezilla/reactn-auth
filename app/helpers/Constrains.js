@@ -1,6 +1,6 @@
 /* eslint-disable */
 export const LOCAL_STORAGE_STORE = '@store_react_native_auth';
-export const LOCAL_STORAGE_SUPPORT = '@store_react_native_auth_support';
+export const LOCAL_STORAGE_SUPPORT = '@store_react_native_support';
 export const themeColors = {
 	// theme
 	primaryColor: {

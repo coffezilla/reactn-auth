@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LOCAL_STORAGE_STORE, LOCAL_STORAGE_SUPPORT } from './Constrains';
 
 export const writeItemToStorage = async (value) => {
-	console.log('cara');
 	try {
 		const jsonValue = JSON.stringify(value);
 		await AsyncStorage.setItem(LOCAL_STORAGE_STORE, jsonValue);
@@ -44,7 +43,8 @@ export const readItemFromStorageSupport = async () => {
 };
 
 export const clearAllFromStorage = async () => {
-	try {
-		await AsyncStorage.clear();
-	} catch (e) {}
+	writeItemToStorage({});
+	// try {
+	// 	await AsyncStorage.clear();
+	// } catch (e) {}
 };
