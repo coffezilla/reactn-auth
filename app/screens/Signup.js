@@ -99,7 +99,7 @@ const Signup = () => {
 				formFields[2].value
 			).then((responseSignup) => {
 				if (responseSignup.data.status === 1) {
-					getAuth(formFields[1].value.email)
+					getAuth(formFields[1].value)
 						.then((resAuth) => {
 							if (resAuth.data.status === 1) {
 								writeItemToStorage(resAuth.data).then((response) => {
