@@ -21,6 +21,6 @@
 	//token JWT
 	function jwt_key()
 	{
-		return '1!AO&hRzVk$S';
+		return 'xxx';
 	}		
 ?>
